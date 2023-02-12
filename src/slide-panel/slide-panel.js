@@ -18,8 +18,11 @@ export class SlidePanel extends React.Component {
       from: "right",
       shouldCloseOnEsc: true,
       closeIcon: 'X',
-      width: 500 + 'px'
+      width: 500 + 'px',
+      hideHeader: true
     };
+
+    this.toggleSlidePanel = this.toggleSlidePanel.bind(this);
   }
 
   componentDidMount() {
@@ -30,21 +33,22 @@ export class SlidePanel extends React.Component {
     this.setState({isPanelOpen: !this.state.isPanelOpen});
   }
 
-  render() {
+  render() {  
     return (
-      <div style={{marginTop: "32px"}}>
-        <HalfChevronIcon />
+      <>
+        <div onClick={this.toggleSlidePanel}><HalfChevronIcon /></div>
         <ReactSlidingPane
-          from={this.state.config.from}
-          title={this.state.config.title}
-          shouldCloseOnEsc={this.state.config.shouldCloseOnEsc}
-          closeIcon={this.state.config.closeIcon}
-          width={this.state.config.width}
-          isOpen={this.state.isPaneOpen}
-          onRequestClose={this.toggleSlidePanel()}>
+          from={this.config.from}
+          title={this.config.title}
+          shouldCloseOnEsc={this.config.shouldCloseOnEsc}
+          closeIcon={this.config.closeIcon}
+          width={this.config.width}
+          isOpen={this.state.isPanelOpen}
+          hideHeader={this.config.hideHeader}
+          onRequestClose={this.toggleSlidePanel}>
           this is the content
         </ReactSlidingPane>
-      </div>
+      </>
     );
   }  
 }
