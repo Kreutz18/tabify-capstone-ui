@@ -1,4 +1,5 @@
 .half-chevron-left {
   cursor: pointer;
   float: right;
+  margin-right: -13px;
 }

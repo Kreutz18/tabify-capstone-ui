@@ -1,0 +1,18 @@
+.playlist-item-view {
+  padding: 0px !important;
+}
+
+.playlist-list {
+  padding-left: 0px !important;
+}
+
+.list-item {
+  list-style-type: none;
+  border: 1px solid black;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.list-item:hover {
+  background-color: gainsboro;
+}
