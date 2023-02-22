@@ -21,6 +21,9 @@ export function NavigationBar() {
             <LinkContainer to="/login">
               <Nav.Link>Login to Spotify</Nav.Link>
             </LinkContainer>
+            <LinkContainer to="/logout">
+              <Nav.Link>Logout</Nav.Link>
+            </LinkContainer>
           </Nav>
         </Navbar.Collapse>
       </Container>
