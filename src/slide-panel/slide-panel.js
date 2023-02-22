@@ -2,7 +2,7 @@ import React from 'react';
 import ReactSlidingPane from 'react-sliding-pane';
 import { HalfChevronIcon } from '../half-chevron-icon/half-chevron-icon';
 import 'react-sliding-pane/dist/react-sliding-pane.css';
-import './slide-panel.css';
+import './slide-panel.scss';
 
 import _ from 'lodash';
 
@@ -36,7 +36,6 @@ export class SlidePanel extends React.Component {
   render() {  
     return (
       <>
-        <div onClick={this.toggleSlidePanel}><HalfChevronIcon /></div>
         <ReactSlidingPane
           from={this.config.from}
           title={this.config.title}
@@ -48,6 +47,7 @@ export class SlidePanel extends React.Component {
           onRequestClose={this.toggleSlidePanel}>
           this is the content
         </ReactSlidingPane>
+        <div onClick={this.toggleSlidePanel}><HalfChevronIcon /></div>
       </>
     );
   }  

@@ -1,4 +1,4 @@
-import './App.css';
+import './App.scss';
 import { NavigationBar } from './navbar/navbar.js';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import { AppRouter } from './AppRouter';
