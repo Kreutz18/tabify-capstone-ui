@@ -1,23 +1,18 @@
 .playlist-container {
-  // max-height: 600px !important;
-  height: 70vh;
   overflow-y: scroll;
   padding: 0px;
 
   &::-webkit-scrollbar {
     display: none;
   }
-  // -ms-overflow-style: none;
 }
 
-  .playlist-button {
-    position: sticky;
-    left: 0;
-    bottom: 0;
-    border-radius: 0px;
-  }
-
-
+.playlist-button {
+  position: sticky;
+  left: 0;
+  bottom: 0;
+  border-radius: 0px;
+}
 
 .list-item {
   list-style-type: none;

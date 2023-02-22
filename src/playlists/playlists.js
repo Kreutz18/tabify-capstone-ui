@@ -1,8 +1,8 @@
 import { SlidePanel } from '../slide-panel/slide-panel';
 import { useEffect, useState } from 'react';
-import { Button, Col, Container, Row } from 'react-bootstrap';
+import { Button, Col, Container, Row, Table } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './playlists.scss';
-// import { Button } from 'bootstrap';
 
 const hardCodedPlaylists = [
   {id: 1, name: 'Rock This'},
@@ -26,15 +26,20 @@ const hardCodedPlaylists = [
 export function Playlists() {
   const [playlists, setPlaylists] = useState([]);
   const [previousTarget, setPreviousTarget] = useState(null);
+  const [playlistTracks, setPlaylistTracks] = useState([]);
+
+  const headers = {
+    method: 'get',
+    headers: new Headers({ 'Authorization': `Bearer ${localStorage.getItem("accessToken")}` })
+  };
 
   useEffect(() => {
-    setPlaylists(hardCodedPlaylists);
-    // fetch("https://api.spotify.com/v1/me/playlists", {
-    //   method: 'get',
-    //   headers: new Headers({ 'Authorization': `Bearer ${localStorage.getItem("accessToken")}` })
-    // }).then(response => response.json()).then((data) => {
-    //   setPlaylists(data.items);
-    // });
+    // setPlaylists(hardCodedPlaylists);
+    fetch("https://api.spotify.com/v1/me/playlists", headers).then(response => response.json()).then((data) => {
+      
+      setPlaylists(data.items);
+      console.log(playlists);
+    });
   }, []);
 
   function selectItem(event, item) {
@@ -50,25 +55,67 @@ export function Playlists() {
       event.target.classList.add('selected');
       setPreviousTarget(event.target);
     }
+
+    fetchTracks(item.tracks.href);
+  }
+
+  function fetchTracks(trackUrl) {
+    fetch(trackUrl + '?additional_types=track', headers).then(response => response.json()).then((tracks) => {
+      setPlaylistTracks(tracks);
+    });
+  }
+
+  function millisToMinutesAndSeconds(milliseconds) {
+    const seconds = Math.floor((milliseconds / 1000) % 60);
+    const minutes = Math.floor((milliseconds / 1000 / 60) % 60);
+    const hours = Math.floor((milliseconds / 1000 / 60 / 60) % 24);
+    return hours + ":" + (minutes < 10 ? '0' : '') + minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
   }
 
   return (
     <>
-      <Container fluid>
+      <Container className='mt-5' fluid>
         <Row>
-          <Col md={{span: 3, offset: 1}} lg={{span: 2, offset: 1}}>
-          <div  className="mt-5 ">
+          <Col md={3} lg={2}>
             <label style={{width: '100%', textAlign: 'left', fontWeight: 500, fontSize: '20px'}}>Playlists</label>
-            <ul  className='border playlist-container' style={{paddingLeft: "0px", margin: 'auto'}}>
-              {playlists.map(el =>
-                <li className="list-item" key={el.id} value={el.name} onClick={(e) => {selectItem(e, el)}}>{el.name}</li>
-              )}
-            </ul>
-            <Button className='playlist-button' style={{width: '100%'}} variant="dark"> Create Playlist</Button>
-          </div>
-
+            <div>
+              <ul  className='border playlist-container' style={{paddingLeft: "0px", margin: 'auto'}}>
+                {playlists.map(el =>
+                  <li className="list-item" key={el.id} value={el.name} onClick={(e) => {selectItem(e, el)}}>{el.name}</li>
+                )}
+              </ul>
+              <Button className='playlist-button' style={{width: '100%'}} variant="dark"> Create Playlist</Button>
+            </div>
           </Col>
           <Col>
+            <Table hover responsive>
+              <thead>
+                <tr className='align-left'>
+                  <th>#</th>
+                  <th>Title</th>
+                  <th>Album</th>
+                  <th>Date Added</th>
+                  <th><FontAwesomeIcon icon="fa-regular fa-clock" /></th>
+                </tr>
+              </thead>
+              <tbody>
+                {playlistTracks.items && 
+                  playlistTracks.items.map((item, i) => {
+                    return <>
+                    <tr className='align-left'>
+                      <td key={i + '-number'}>{i + 1}</td>
+                      <td key={item.track.id}>{item.track.name}</td>
+                      <td key={item.track.album.id}>{item.track.album.name}</td>
+                      <td key={i + '-time'}>{millisToMinutesAndSeconds(item.track.duration_ms)}</td>
+                      <td key={i + '-chevron'} className='clickable'><FontAwesomeIcon icon="fa-solid fa-chevron-down" /></td>
+                    </tr>
+                    </>
+                  })
+                }
+              </tbody>
+            </Table>
+          </Col>
+          <Col sm={1}>
             <SlidePanel />
           </Col>
         </Row>
