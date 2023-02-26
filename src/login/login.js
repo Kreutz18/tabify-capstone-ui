@@ -21,4 +21,5 @@ http://localhost:3000/login#access_token=ABCqxL4Y&token_type=Bearer&expires_in=3
 
 const HandleLogin = () => {
    window.location = `${SPOTIFY_AUTHORIZE_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URL_AFTER_LOGIN}&scope=${SCOPES_URL_PARAM}&response_type=token&show_dialog=true`;
+   console.log(localStorage.getItem("user"))
  };

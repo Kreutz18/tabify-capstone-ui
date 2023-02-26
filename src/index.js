@@ -2,6 +2,10 @@ import { BrowserRouter } from 'react-router-dom';
 import ReactDOM from 'react-dom/client';
 import App from './App.js';
 import React from 'react';
+import useState from 'react';
+import AuthContext from './auth-context.js'
+
+
 import './index.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -12,3 +16,18 @@ root.render(
     </BrowserRouter>
   </React.StrictMode>
 );
+
+const AppWrapper = () => {
+  const [loggedIn, setLoggedIn] = useState(false)
+
+  return (
+    <AuthContext.Provider value={{ loggedIn, setLoggedIn }}>
+      <App />
+    </AuthContext.Provider>
+  )
+}
+
+ReactDOM.render(
+  <AppWrapper/>,
+  document.querySelector('#app')
+)

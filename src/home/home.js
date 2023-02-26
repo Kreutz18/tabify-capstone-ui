@@ -10,13 +10,15 @@ export function Home() {
     localStorage.setItem("accessToken", access_token);
     localStorage.setItem("tokenType", token_type);
     localStorage.setItem("expiresIn", expires_in);
+    localStorage.setItem("user", JSON.stringify("user"));
+
     console.log(localStorage.getItem("accessToken"));
   }
 });
 
   return (
     <p>Home Works!</p>
-    // Do we need a Home view?
+    // Do we need a Home view
   )
 }
 

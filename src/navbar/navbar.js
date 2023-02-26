@@ -5,6 +5,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import './navbar.css';
 
 export function NavigationBar() {
+  const isLogin = localStorage.getItem("user");
   return (
     <Navbar collapseOnSelect bg="dark" variant="dark" expand="md">
       <Container fluid>
