@@ -10,7 +10,7 @@ export function Home() {
     localStorage.setItem("accessToken", access_token);
     localStorage.setItem("tokenType", token_type);
     localStorage.setItem("expiresIn", expires_in);
-    localStorage.setItem("user", JSON.stringify("user"));
+    localStorage.setItem("user", true);
 
     console.log(localStorage.getItem("accessToken"));
   }
@@ -30,7 +30,7 @@ const getReturnedParamsFromSpotifyAuth = (hash) => {
     accumulater[key] = value;
     return accumulater;
   }, {});
-
+  window.location = "http://localhost:3000/home";
   return paramsSplitUp;
 };
 

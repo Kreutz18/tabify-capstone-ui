@@ -16,18 +16,3 @@ root.render(
     </BrowserRouter>
   </React.StrictMode>
 );
-
-const AppWrapper = () => {
-  const [loggedIn, setLoggedIn] = useState(false)
-
-  return (
-    <AuthContext.Provider value={{ loggedIn, setLoggedIn }}>
-      <App />
-    </AuthContext.Provider>
-  )
-}
-
-ReactDOM.render(
-  <AppWrapper/>,
-  document.querySelector('#app')
-)
