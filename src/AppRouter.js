@@ -3,6 +3,8 @@ import { Home } from "./home/home.js";
 import { BandView } from "./band-view/band-view.js";
 import { Playlists } from "./playlists/playlists.js";
 import { Login } from "./login/login.js";
+import { Logout } from "./login/logout.js";
+
 
 export function AppRouter() {
   return (
@@ -11,6 +13,7 @@ export function AppRouter() {
       <Route path="/band" element={<BandView />} />
       <Route path="/playlists" element={<Playlists />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/logout" element={<Logout />} />
     </Routes>
   )
 }
