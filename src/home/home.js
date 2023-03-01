@@ -10,13 +10,15 @@ export function Home() {
     localStorage.setItem("accessToken", access_token);
     localStorage.setItem("tokenType", token_type);
     localStorage.setItem("expiresIn", expires_in);
+    localStorage.setItem("user", true);
+
     console.log(localStorage.getItem("accessToken"));
   }
 });
 
   return (
     <p>Home Works!</p>
-    // Do we need a Home view?
+    // Do we need a Home view
   )
 }
 
@@ -28,7 +30,7 @@ const getReturnedParamsFromSpotifyAuth = (hash) => {
     accumulater[key] = value;
     return accumulater;
   }, {});
-
+  window.location = "http://localhost:3000/home";
   return paramsSplitUp;
 };
 
