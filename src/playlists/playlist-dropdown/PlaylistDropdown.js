@@ -32,13 +32,19 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
     },
   )
 
-  export function PlaylistDropdown() {
+  export function PlaylistDropdown({playlistId, trackId}) {
     return (
       <Dropdown>
         <Dropdown.Toggle as={CustomDropdown}></Dropdown.Toggle>
         <Dropdown.Menu as={CustomMenu}>
-          <Dropdown.Item eventKey="1">Delete</Dropdown.Item>
+          <Dropdown.Item eventKey="1" onClick={() => (deleteFunction(playlistId, trackId))}>Delete</Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
     )
   }
+
+ function deleteFunction (playlistId, trackId)
+ {
+     console.log(playlistId);
+     console.log(trackId);
+ }

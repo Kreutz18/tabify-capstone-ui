@@ -1,7 +1,13 @@
-import {useEffect } from 'react';
+import { React, useEffect, useState } from 'react';         
+import { LoadingSpinner } from '../LoadingSpinner';
+
 
 export function Home() {
+  const [ username, setUsername ] = useState("name");
+  const [ loading, setLoading ] = useState(false);
+
   useEffect(() => {
+  setLoading(true);
   if (window.location.hash) {
     const { access_token, expires_in, token_type } =
       getReturnedParamsFromSpotifyAuth(window.location.hash);
@@ -11,28 +17,10 @@ export function Home() {
     localStorage.setItem("tokenType", token_type);
     localStorage.setItem("expiresIn", expires_in);
     localStorage.setItem("user", true);
-
     console.log(localStorage.getItem("accessToken"));
+    getUserProfile();
   }
 });
-
-  return (
-    <p>Home Works!</p>
-    // Do we need a Home view
-  )
-}
-
-const getReturnedParamsFromSpotifyAuth = (hash) => {
-  const stringAfterHashtag = hash.substring(1);
-  const paramsInUrl = stringAfterHashtag.split("&");
-  const paramsSplitUp = paramsInUrl.reduce((accumulater, currentValue) => {
-    const [key, value] = currentValue.split("=");
-    accumulater[key] = value;
-    return accumulater;
-  }, {});
-  window.location = "http://localhost:3000/home";
-  return paramsSplitUp;
-};
 
 function getUserProfile() 
 {
@@ -47,16 +35,38 @@ function getUserProfile()
       }
   })
     .then((response) => response.json())
-    .then((data) => localStorage.setItem("profile", JSON.stringify(data)))
-    .then((data) => console.log(JSON.stringify(data)));
+    .then((data) => {
+        localStorage.setItem("profile", JSON.stringify(data))
+        setUsername(data);
+        setLoading(false);
+        var profile = localStorage.getItem("profile");
+        var parseTest = JSON.parse(profile);
+        var name = parseTest.display_name;
+        return name;
+    })
 
 
-  var profile = localStorage.getItem("profile");
-  console.log(profile);
 
-  var parseTest = JSON.parse(profile);
-  var name = parseTest.display_name;
-
-  console.log(name);
-  return name;
 }
+  return (
+      
+        !loading ? (<p>Welcome {username}</p>):(<LoadingSpinner />)
+     
+    
+    // Do we need a Home view
+  )
+
+}
+
+const getReturnedParamsFromSpotifyAuth = (hash) => {
+  const stringAfterHashtag = hash.substring(1);
+  const paramsInUrl = stringAfterHashtag.split("&");
+  const paramsSplitUp = paramsInUrl.reduce((accumulater, currentValue) => {
+    const [key, value] = currentValue.split("=");
+    accumulater[key] = value;
+    return accumulater;
+  }, {});
+  window.location = "http://localhost:3000/home";
+  return paramsSplitUp;
+};
+
