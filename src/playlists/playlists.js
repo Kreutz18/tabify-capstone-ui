@@ -1,7 +1,7 @@
-import { SlidePanel } from '../slide-panel/slide-panel';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
 import { Button, Col, Container, Row, Table } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { SlidePanel } from '../slide-panel/slide-panel';
 import './playlists.scss';
 
 const hardCodedPlaylists = [
@@ -60,7 +60,7 @@ export function Playlists() {
   }
 
   function fetchTracks(trackUrl) {
-    fetch(trackUrl + '?additional_types=track', headers).then(response => response.json()).then((tracks) => {
+    fetch(trackUrl + '?offset=0&limit=20', headers).then(response => response.json()).then((tracks) => {
       setPlaylistTracks(tracks);
     });
   }
@@ -69,7 +69,7 @@ export function Playlists() {
     const seconds = Math.floor((milliseconds / 1000) % 60);
     const minutes = Math.floor((milliseconds / 1000 / 60) % 60);
     const hours = Math.floor((milliseconds / 1000 / 60 / 60) % 24);
-    return hours + ":" + (minutes < 10 ? '0' : '') + minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
+    return (hours ? hours + ":" : '') + (hours && minutes < 10 ? '0' : '') + minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
   }
 
   return (
@@ -99,17 +99,16 @@ export function Playlists() {
                 </tr>
               </thead>
               <tbody>
-                {playlistTracks.items && 
-                  playlistTracks.items.map((item, i) => {
-                    return <>
-                    <tr className='align-left'>
-                      <td key={i + '-number'}>{i + 1}</td>
-                      <td key={item.track.id}>{item.track.name}</td>
-                      <td key={item.track.album.id}>{item.track.album.name}</td>
-                      <td key={i + '-time'}>{millisToMinutesAndSeconds(item.track.duration_ms)}</td>
-                      <td key={i + '-chevron'} className='clickable'><FontAwesomeIcon icon="fa-solid fa-chevron-down" /></td>
-                    </tr>
-                    </>
+                {playlistTracks.items?.map((item, i) => {
+                    return (
+                      <tr key={i} className='align-left'>
+                        <td key={'number-' + item.track.id}>{i + 1}</td>
+                        <td key={'name-' + item.track.id}>{item.track.name}</td>
+                        <td key={item.track.album.id + '-' + item.track.id}>{item.track.album.name}</td>
+                        <td key={'time-' + item.track.id + '-' + item.track.id}>{millisToMinutesAndSeconds(item.track.duration_ms)}</td>
+                        <td key={'chevron-' + item.track.id} className='clickable'><FontAwesomeIcon icon="fa-solid fa-chevron-down" /></td>
+                      </tr>
+                    )
                   })
                 }
               </tbody>

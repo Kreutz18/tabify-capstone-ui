@@ -1,6 +1,7 @@
 .playlist-container {
   overflow-y: scroll;
   padding: 0px;
+  max-height: 75vh;
 
   &::-webkit-scrollbar {
     display: none;
