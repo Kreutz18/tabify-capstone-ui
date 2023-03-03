@@ -3,7 +3,7 @@ const SPOTIFY_AUTHORIZE_ENDPOINT = "https://accounts.spotify.com/authorize";
 
 // https://accounts.spotify.com/authorize?client_id=5e4a37cbcf854828b12099796f712f94&redirect_uri=http://localhost:8080/get-user-code/&scope=user-read-currently-playing%20user-read-playback-state%20playlist-read-private&response_type=token&show_dialog=true
 // What is the redirect URI?
-const REDIRECT_URL_AFTER_LOGIN = "http://localhost:3000/home";
+const REDIRECT_URL_AFTER_LOGIN = "http://localhost:3000/validate";
 const SPACE_DELIMITER = "%20";
 const SCOPES = [
   "user-read-currently-playing",
