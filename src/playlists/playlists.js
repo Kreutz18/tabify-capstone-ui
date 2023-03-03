@@ -27,6 +27,8 @@ export function Playlists() {
   const [playlists, setPlaylists] = useState([]);
   const [previousTarget, setPreviousTarget] = useState(null);
   const [playlistTracks, setPlaylistTracks] = useState([]);
+  const [playlistSelected, setPlaylistSelected] = useState(false);
+  const [hasSongs, setHasSongs] = useState(false);
 
   const headers = {
     method: 'get',
@@ -59,6 +61,8 @@ export function Playlists() {
   function fetchTracks(trackUrl) {
     fetch(trackUrl + '?offset=0&limit=20', headers).then(response => response.json()).then((tracks) => {
       setPlaylistTracks(tracks);
+      setPlaylistSelected(true);
+      setHasSongs(tracks.items.length > 0 ? true : false);
     });
   }
 
@@ -85,19 +89,20 @@ export function Playlists() {
             </div>
           </Col>
           <Col>
-            <Table hover responsive>
-              <thead>
-                <tr className='align-left'>
-                  <th>#</th>
-                  <th>Title</th>
-                  <th>Album</th>
-                  <th>Date Added</th>
-                  <th><FontAwesomeIcon icon="fa-regular fa-clock" /></th>
-                </tr>
-              </thead>
-              <tbody>
-                {playlistTracks.items?.map((item, i) => {
-                  if (item.track) {
+          {playlistSelected ? (
+            hasSongs ? (
+              <Table hover responsive>
+                <thead>
+                  <tr className='align-left'>
+                    <th>#</th>
+                    <th>Title</th>
+                    <th>Album</th>
+                    <th>Date Added</th>
+                    <th><FontAwesomeIcon icon="fa-regular fa-clock" /></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {playlistTracks.items?.map((item, i) => {
                     return (
                       <tr key={i} className='align-left'>
                         <td key={'number-' + item.track.id}>{i + 1}</td>
@@ -107,11 +112,16 @@ export function Playlists() {
                         <td key={'chevron-' + item.track.id} className='clickable'><FontAwesomeIcon icon="fa-solid fa-chevron-down" /></td>
                       </tr>
                     )
-                  }
-                  })
-                }
-              </tbody>
-            </Table>
+                  })}
+                </tbody>
+              </Table>
+            ) : (
+              <p>Add songs to view playlist</p>
+            )
+          ) : 
+          (
+            <p>Select a playlist</p>
+          )}
           </Col>
           <Col sm={1}>
             <SlidePanel />
