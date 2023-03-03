@@ -34,11 +34,8 @@ export function Playlists() {
   };
 
   useEffect(() => {
-    // setPlaylists(hardCodedPlaylists);
     fetch("https://api.spotify.com/v1/me/playlists", headers).then(response => response.json()).then((data) => {
-      
       setPlaylists(data.items);
-      console.log(playlists);
     });
   }, []);
 
@@ -100,6 +97,7 @@ export function Playlists() {
               </thead>
               <tbody>
                 {playlistTracks.items?.map((item, i) => {
+                  if (item.track) {
                     return (
                       <tr key={i} className='align-left'>
                         <td key={'number-' + item.track.id}>{i + 1}</td>
@@ -109,6 +107,7 @@ export function Playlists() {
                         <td key={'chevron-' + item.track.id} className='clickable'><FontAwesomeIcon icon="fa-solid fa-chevron-down" /></td>
                       </tr>
                     )
+                  }
                   })
                 }
               </tbody>
