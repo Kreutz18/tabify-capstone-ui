@@ -2,6 +2,11 @@ import React, {useState} from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+  const headers = {
+  'Accept': 'application/json',
+  'Content-type': 'application/json',
+  'Authorization': 'Bearer ' + localStorage.getItem("accessToken")
+}
   
   const CustomDropdown = React.forwardRef(({children, onClick}, ref) => (
     <FontAwesomeIcon icon="fa-solid fa-chevron-down" ref={ref} onClick={(e) => {
@@ -45,6 +50,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
  function deleteFunction (playlistId, trackId)
  {
-     console.log(playlistId);
-     console.log(trackId);
+  var fetchUrl = "https://api.spotify.com/v1/playlists/"+ playlistId + "/tracks";
+  //  var fetchBody = {"tracks": [{"uri": "spotify:track:6C6fHTuFUxVtJpBOOaMvJr"}]} + "";
+  var fetchBody = JSON.stringify({"tracks": [{"uri": "spotify:track:" + trackId}]});
+  console.log(fetchBody);
+  fetch(fetchUrl, {
+        method: 'DELETE',
+        headers,
+        body: fetchBody
+    })
+    window.location.reload(false);
  }
