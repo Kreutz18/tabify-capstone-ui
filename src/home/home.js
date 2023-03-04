@@ -2,19 +2,25 @@ import {useEffect } from 'react';
 
 export function Home() {
   useEffect(() => {
-  if (window.location.hash) {
-    const { access_token, expires_in, token_type } =
-      getReturnedParamsFromSpotifyAuth(window.location.hash);
+    if (localStorage.getItem("loggedIn")) {
+      getUserProfile();
+    }
+  }, [username])
 
-    localStorage.clear();
-    localStorage.setItem("accessToken", access_token);
-    localStorage.setItem("tokenType", token_type);
-    localStorage.setItem("expiresIn", expires_in);
-    localStorage.setItem("user", true);
-
-    console.log(localStorage.getItem("accessToken"));
+  function getUserProfile() {
+    setLoading(true);
+    fetch("https://api.spotify.com/v1/me", {
+        method: 'get',
+        headers
+    }).then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        setIsLoggedIn(localStorage.getItem("loggedIn"));
+        localStorage.setItem("user", JSON.stringify(data));
+        setUsername(data.display_name);
+        setLoading(false);
+    });
   }
-});
 
   return (
     <p>Home Works!</p>

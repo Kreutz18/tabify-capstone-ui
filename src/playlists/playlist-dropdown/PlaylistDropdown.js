@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
   
   const CustomDropdown = React.forwardRef(({children, onClick}, ref) => (
-    <FontAwesomeIcon icon="fa-solid fa-chevron-down" ref={ref} onClick={(e) => {
+    <FontAwesomeIcon className='clickable' icon="fa-solid fa-chevron-down" ref={ref} onClick={(e) => {
       e.preventDefault();
       onClick(e);
     }}>
@@ -32,12 +32,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
     },
   )
 
-  export function PlaylistDropdown() {
+  export function PlaylistDropdown({playlist, trackId, deleteCallback}) {
+    const user = JSON.parse(localStorage.getItem("user"));
     return (
       <Dropdown>
         <Dropdown.Toggle as={CustomDropdown}></Dropdown.Toggle>
         <Dropdown.Menu as={CustomMenu}>
-          <Dropdown.Item eventKey="1">Delete</Dropdown.Item>
+          {
+            playlist.owner.id === user.id && 
+              <Dropdown.Item eventKey="1" onClick={() => (deleteFunction(playlist.id, trackId, deleteCallback))}>Delete</Dropdown.Item>
+          }
+          <Dropdown.Item eventKey="2">Details</Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
     )
