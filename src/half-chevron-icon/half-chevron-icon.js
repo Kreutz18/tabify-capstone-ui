@@ -1,4 +1,4 @@
-import './half-chevron-icon.css';
+import './half-chevron-icon.scss';
 
 export function HalfChevronIcon() {
   return (

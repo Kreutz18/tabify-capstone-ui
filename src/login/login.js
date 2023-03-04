@@ -1,4 +1,4 @@
-const CLIENT_ID = "5e4a37cbcf854828b12099796f712f94";
+const CLIENT_ID = "6f87df1c39584f28aa4c5482bba6b867";
 const SPOTIFY_AUTHORIZE_ENDPOINT = "https://accounts.spotify.com/authorize";
 
 // https://accounts.spotify.com/authorize?client_id=5e4a37cbcf854828b12099796f712f94&redirect_uri=http://localhost:8080/get-user-code/&scope=user-read-currently-playing%20user-read-playback-state%20playlist-read-private&response_type=token&show_dialog=true
