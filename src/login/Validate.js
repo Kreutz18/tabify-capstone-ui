@@ -16,7 +16,6 @@ export function Validate() {
       localStorage.setItem("expiresIn", expires_in);
       localStorage.setItem("loggedIn", true);
       setIsLoggedIn(true);
-      console.log(localStorage.getItem("accessToken"));
     }
   });
 

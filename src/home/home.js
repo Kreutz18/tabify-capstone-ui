@@ -25,7 +25,6 @@ export function Home() {
         headers
     }).then((response) => response.json())
       .then((data) => {
-        console.log(data);
         setIsLoggedIn(localStorage.getItem("loggedIn"));
         localStorage.setItem("user", JSON.stringify(data));
         setUsername(data.display_name);

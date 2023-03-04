@@ -25,8 +25,6 @@ export function Playlists() {
   const [displayMessage, setDisplayMessage] = useState(selectPlaylistMessage);
   const [selectedPlaylist, setSelectedPlaylist] = useState(null);
   
-
-
   useEffect(() => {
     setIsLoading(true);
     SpotifyService.getPlaylists().then((data) => {
@@ -71,6 +69,8 @@ export function Playlists() {
     });
   }
 
+  const currentUser = JSON.parse(localStorage.getItem("user"));
+
   return (
     <>
       <Container className='mt-5' fluid>
@@ -96,7 +96,7 @@ export function Playlists() {
             ) : (<p>{displayMessage}</p>)
           }
           </Col>
-          {playlistSelected && 
+          {playlistSelected && selectedPlaylist.owner.id === currentUser.id && 
             <Col sm={1}>
               <SlidePanel playlist={selectedPlaylist} addSongCallback={(playlist) => (fetchTracks(playlist.tracks.href))}/>
             </Col>

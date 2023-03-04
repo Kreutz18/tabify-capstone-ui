@@ -36,9 +36,6 @@ export class SlidePanel extends React.Component {
     };
 
     this.results = [];
-    this.playlist = props.playlist;
-    console.log('CONSTRUCT');
-    console.log(this.playlist.name);
     this.addSongCallback = this.props.addSongCallback;
     this.toggleSlidePanel = this.toggleSlidePanel.bind(this);
     this.searchSongs = this.searchSongs.bind(this);
@@ -46,15 +43,10 @@ export class SlidePanel extends React.Component {
 
   componentDidMount() {
     this.config = _.extend({}, this.config, this.props.config);
-    this.playlist = this.props.playlist;
   }
   
   componentDidUpdate(props) {
-    if (this.playlist.id !== props.playlist.id) {
-      console.log(props);
-      this.playlist = props.playlist;
-      console.log(this.playlist.name);
-    }
+
   }
   
   toggleSlidePanel() {
