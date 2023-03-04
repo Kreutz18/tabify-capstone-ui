@@ -1,6 +1,17 @@
-import {useEffect } from 'react';
+import { React, useEffect, useState } from 'react';         
+import { LoadingSpinner } from '../LoadingSpinner';
+
+const headers = {
+  'Accept': 'application/json',
+  'Content-type': 'application/json',
+  'Authorization': 'Bearer ' + localStorage.getItem("accessToken")
+}
 
 export function Home() {
+  const [ username, setUsername ] = useState(null);
+  const [ loading, setLoading ] = useState(false);
+  const [ isLoggedIn, setIsLoggedIn ] = useState(false);
+
   useEffect(() => {
     if (localStorage.getItem("loggedIn")) {
       getUserProfile();
@@ -23,46 +34,23 @@ export function Home() {
   }
 
   return (
-    <p>Home Works!</p>
-    // Do we need a Home view
+    !loading ? 
+    (
+      <>
+
+        {isLoggedIn ? (
+          <p>Welcome {username}</p>) : (<p></p>)}
+      
+      
+        <div style={{fontSize: '24px', fontColor: 'green'}}>
+          Tabify
+        </div>
+      </>
+    ):(
+      <LoadingSpinner />
+    )
   )
 }
 
-const getReturnedParamsFromSpotifyAuth = (hash) => {
-  const stringAfterHashtag = hash.substring(1);
-  const paramsInUrl = stringAfterHashtag.split("&");
-  const paramsSplitUp = paramsInUrl.reduce((accumulater, currentValue) => {
-    const [key, value] = currentValue.split("=");
-    accumulater[key] = value;
-    return accumulater;
-  }, {});
-  window.location = "http://localhost:3000/home";
-  return paramsSplitUp;
-};
-
-function getUserProfile() 
-{
-  const accessToken = localStorage.getItem("accessToken");
-  console.log(accessToken);
-  fetch("https://api.spotify.com/v1/me", {
-      method: 'get',
-      headers: {
-        'Accept': 'application/json',
-        'Content-type': 'application/json',
-        'Authorization': 'Bearer ' + accessToken
-      }
-  })
-    .then((response) => response.json())
-    .then((data) => localStorage.setItem("profile", JSON.stringify(data)))
-    .then((data) => console.log(JSON.stringify(data)));
 
 
-  var profile = localStorage.getItem("profile");
-  console.log(profile);
-
-  var parseTest = JSON.parse(profile);
-  var name = parseTest.display_name;
-
-  console.log(name);
-  return name;
-}
