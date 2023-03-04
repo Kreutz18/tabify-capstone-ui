@@ -44,7 +44,7 @@ export function Playlists() {
       event.target.classList.add('selected');
       setPreviousTarget(event.target);
     }
-    setSelectedPlaylist(item.id);
+    setSelectedPlaylist(item);
     fetchTracks(item.tracks.href);
   }
   
@@ -82,7 +82,7 @@ export function Playlists() {
             isLoading ? (
               <LoadingSpinner />
             ) : (hasSongs ? (
-                <PlaylistTable playlistTracks={playlistTracks} selectedPlaylistId={selectedPlaylist}/>
+                <PlaylistTable playlistTracks={playlistTracks} selectedPlaylistId={selectedPlaylist.id} deleteCallback={() => (fetchTracks(selectedPlaylist.tracks.href))}/>
               ) : (<p>Add songs to view playlist</p>))
             ) : (<p>{playlistMessage}</p>)
           }

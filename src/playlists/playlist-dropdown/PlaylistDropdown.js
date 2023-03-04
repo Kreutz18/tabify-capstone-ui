@@ -37,27 +37,26 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
     },
   )
 
-  export function PlaylistDropdown({playlistId, trackId}) {
+  export function PlaylistDropdown({playlistId, trackId, deleteCallback}) {
     return (
       <Dropdown>
         <Dropdown.Toggle as={CustomDropdown}></Dropdown.Toggle>
         <Dropdown.Menu as={CustomMenu}>
-          <Dropdown.Item eventKey="1" onClick={() => (deleteFunction(playlistId, trackId))}>Delete</Dropdown.Item>
+          <Dropdown.Item eventKey="1" onClick={() => (deleteFunction(playlistId, trackId, deleteCallback))}>Delete</Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
     )
   }
 
- function deleteFunction (playlistId, trackId)
+ function deleteFunction (playlistId, trackId, deleteCallback)
  {
   var fetchUrl = "https://api.spotify.com/v1/playlists/"+ playlistId + "/tracks";
-  //  var fetchBody = {"tracks": [{"uri": "spotify:track:6C6fHTuFUxVtJpBOOaMvJr"}]} + "";
   var fetchBody = JSON.stringify({"tracks": [{"uri": "spotify:track:" + trackId}]});
-  console.log(fetchBody);
   fetch(fetchUrl, {
         method: 'DELETE',
         headers,
         body: fetchBody
+    }).then(() => {
+      deleteCallback();
     })
-    window.location.reload(false);
  }
