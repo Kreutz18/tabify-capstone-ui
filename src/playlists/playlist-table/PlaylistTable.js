@@ -9,7 +9,7 @@ function millisToMinutesAndSeconds(milliseconds) {
   return (hours ? hours + ":" : '') + (hours && minutes < 10 ? '0' : '') + minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
 }
 
-export function PlaylistTable({playlistTracks}) {
+export function PlaylistTable({playlistTracks, selectedPlaylistId, deleteCallback}) {
   return (
     <Table hover responsive>
       <thead>
@@ -30,7 +30,7 @@ export function PlaylistTable({playlistTracks}) {
               <td key={item.track.album.id + '-' + item.track.id}>{item.track.album.name}</td>
               <td key={'time-' + item.track.id + '-' + item.track.id}>{millisToMinutesAndSeconds(item.track.duration_ms)}</td>
               <td key={'chevron-' + item.track.id} className='clickable'>
-                <PlaylistDropdown />
+                <PlaylistDropdown playlistId = {selectedPlaylistId} trackId = {item.track.id} deleteCallback={deleteCallback}/>
               </td>
             </tr>
           )

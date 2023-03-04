@@ -8,9 +8,6 @@ import { faClock } from '@fortawesome/free-regular-svg-icons';
 
 library.add(faChevronDown, faClock);
 
-
-const isLogin = localStorage.getItem("user");
-
 function App() {
   return (
     <div className="App">

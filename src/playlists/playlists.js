@@ -20,10 +20,14 @@ export function Playlists() {
   const [hasSongs, setHasSongs] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [playlistMessage, setPlaylistMessage] = useState(addSongsMessage);
+  const [selectedPlaylist, setSelectedPlaylist] = useState(null);
+  
+
 
   useEffect(() => {
     fetch("https://api.spotify.com/v1/me/playlists", headers).then(response => response.json()).then((data) => {
       setPlaylists(data.items);
+      localStorage.setItem("playlist_info", JSON.stringify(data))
     });
   }, []);
   
@@ -40,7 +44,7 @@ export function Playlists() {
       event.target.classList.add('selected');
       setPreviousTarget(event.target);
     }
-    
+    setSelectedPlaylist(item);
     fetchTracks(item.tracks.href);
   }
   
@@ -78,7 +82,7 @@ export function Playlists() {
             isLoading ? (
               <LoadingSpinner />
             ) : (hasSongs ? (
-                <PlaylistTable playlistTracks={playlistTracks}/>
+                <PlaylistTable playlistTracks={playlistTracks} selectedPlaylistId={selectedPlaylist.id} deleteCallback={() => (fetchTracks(selectedPlaylist.tracks.href))}/>
               ) : (<p>Add songs to view playlist</p>))
             ) : (<p>{playlistMessage}</p>)
           }

@@ -26,6 +26,12 @@ export function BandView() {
 
   }
   */
+
+  var playlist = localStorage.getItem("playlist_info")
+  
+  var name = playlist;
+
+  console.log(name);
   return (
     <p>Band View Works!</p>
   )

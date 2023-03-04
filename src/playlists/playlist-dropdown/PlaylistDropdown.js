@@ -2,6 +2,11 @@ import React, {useState} from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+  const headers = {
+  'Accept': 'application/json',
+  'Content-type': 'application/json',
+  'Authorization': 'Bearer ' + localStorage.getItem("accessToken")
+}
   
   const CustomDropdown = React.forwardRef(({children, onClick}, ref) => (
     <FontAwesomeIcon icon="fa-solid fa-chevron-down" ref={ref} onClick={(e) => {
@@ -32,13 +37,26 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
     },
   )
 
-  export function PlaylistDropdown() {
+  export function PlaylistDropdown({playlistId, trackId, deleteCallback}) {
     return (
       <Dropdown>
         <Dropdown.Toggle as={CustomDropdown}></Dropdown.Toggle>
         <Dropdown.Menu as={CustomMenu}>
-          <Dropdown.Item eventKey="1">Delete</Dropdown.Item>
+          <Dropdown.Item eventKey="1" onClick={() => (deleteFunction(playlistId, trackId, deleteCallback))}>Delete</Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
     )
   }
+
+ function deleteFunction (playlistId, trackId, deleteCallback)
+ {
+  var fetchUrl = "https://api.spotify.com/v1/playlists/"+ playlistId + "/tracks";
+  var fetchBody = JSON.stringify({"tracks": [{"uri": "spotify:track:" + trackId}]});
+  fetch(fetchUrl, {
+        method: 'DELETE',
+        headers,
+        body: fetchBody
+    }).then(() => {
+      deleteCallback();
+    })
+ }
