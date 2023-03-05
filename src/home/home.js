@@ -13,7 +13,9 @@ export function Home() {
   const [ isLoggedIn, setIsLoggedIn ] = useState(false);
 
   useEffect(() => {
-    getUserProfile();
+    if (localStorage.getItem("loggedIn")) {
+      getUserProfile();
+    }
   }, [username])
 
   function getUserProfile() {
@@ -23,7 +25,8 @@ export function Home() {
         headers
     }).then((response) => response.json())
       .then((data) => {
-        setIsLoggedIn(localStorage.getItem("user"));
+        setIsLoggedIn(localStorage.getItem("loggedIn"));
+        localStorage.setItem("user", JSON.stringify(data));
         setUsername(data.display_name);
         setLoading(false);
     });

@@ -4,7 +4,7 @@ import { BandView } from "./band-view/band-view.js";
 import { Playlists } from "./playlists/playlists.js";
 import { Login } from "./login/login.js";
 import { Logout } from "./login/logout.js";
-import { Validate } from "./login/validate.js";
+import { Validate } from "./login/Validate.js";
 
 
 export function AppRouter() {

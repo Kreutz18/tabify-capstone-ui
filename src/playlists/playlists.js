@@ -4,6 +4,7 @@ import { SlidePanel } from '../slide-panel/slide-panel';
 import { PlaylistTable } from './playlist-table/PlaylistTable';
 import { LoadingSpinner } from '../LoadingSpinner';
 import './playlists.scss';
+import SpotifyService from '../spotify-service';
 
 const headers = {
   headers: new Headers({ 'Authorization': `Bearer ${localStorage.getItem("accessToken")}` }),
@@ -11,23 +12,24 @@ const headers = {
 };
 
 export function Playlists() {
-  const addSongsMessage = 'Add songs to view playlist';
+  const selectPlaylistMessage = 'Please select a playlist';
   const errorMessage = 'Error while fetching playlist';
+  const addSongsMessage = 'Add songs to view playlist';
   const [playlists, setPlaylists] = useState([]);
   const [previousTarget, setPreviousTarget] = useState(null);
   const [playlistTracks, setPlaylistTracks] = useState([]);
   const [playlistSelected, setPlaylistSelected] = useState(false);
+  const [hasError, setHasError] = useState(false);
   const [hasSongs, setHasSongs] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [playlistMessage, setPlaylistMessage] = useState(addSongsMessage);
+  const [displayMessage, setDisplayMessage] = useState(selectPlaylistMessage);
   const [selectedPlaylist, setSelectedPlaylist] = useState(null);
   
-
-
   useEffect(() => {
-    fetch("https://api.spotify.com/v1/me/playlists", headers).then(response => response.json()).then((data) => {
+    setIsLoading(true);
+    SpotifyService.getPlaylists().then((data) => {
       setPlaylists(data.items);
-      localStorage.setItem("playlist_info", JSON.stringify(data))
+      setIsLoading(false);
     });
   }, []);
   
@@ -45,22 +47,29 @@ export function Playlists() {
       setPreviousTarget(event.target);
     }
     setSelectedPlaylist(item);
+    setPlaylistSelected(true);
     fetchTracks(item.tracks.href);
   }
   
   function fetchTracks(trackUrl) {
     setIsLoading(true);
-    fetch(trackUrl + '?offset=0&limit=20', headers).then(response => response.json()).then((tracks) => {
+    SpotifyService.getPlaylistTracks(trackUrl).then((tracks) => {
       setPlaylistTracks(tracks);
-      setPlaylistSelected(true);
-      setHasSongs(tracks.items && tracks.items.length > 0 ? true : false);
-      setPlaylistMessage(addSongsMessage);
+      setHasError(false);
+      if (tracks.items && tracks.items.length > 0) {
+        setHasSongs(true);
+      } else {
+        setHasSongs(false);
+        setDisplayMessage(addSongsMessage);
+      }
       setIsLoading(false);
-    }, err => {
-      setIsLoading(false);
-      setPlaylistMessage(errorMessage);
+    }, () => {
+      setHasError(true);
+      setDisplayMessage(errorMessage);
     });
   }
+
+  const currentUser = JSON.parse(localStorage.getItem("user"));
 
   return (
     <>
@@ -78,18 +87,20 @@ export function Playlists() {
             </div>
           </Col>
           <Col>
-          {playlistSelected ? (
+          {!hasError && playlistSelected ? (
             isLoading ? (
               <LoadingSpinner />
             ) : (hasSongs ? (
-                <PlaylistTable playlistTracks={playlistTracks} selectedPlaylistId={selectedPlaylist.id} deleteCallback={() => (fetchTracks(selectedPlaylist.tracks.href))}/>
-              ) : (<p>Add songs to view playlist</p>))
-            ) : (<p>{playlistMessage}</p>)
+                <PlaylistTable playlistTracks={playlistTracks} selectedPlaylist={selectedPlaylist} deleteCallback={() => (fetchTracks(selectedPlaylist.tracks.href))}/>
+              ) : (<p>{displayMessage}</p>))
+            ) : (<p>{displayMessage}</p>)
           }
           </Col>
-          <Col sm={1}>
-            <SlidePanel />
-          </Col>
+          {playlistSelected && selectedPlaylist.owner.id === currentUser.id && 
+            <Col sm={1}>
+              <SlidePanel playlist={selectedPlaylist} addSongCallback={(playlist) => (fetchTracks(playlist.tracks.href))}/>
+            </Col>
+          }
         </Row>
       </Container>
     </>
