@@ -1,6 +1,7 @@
 const basePlaylistUrl = 'https://api.spotify.com/v1/playlists/';
 const baseUserPlaylistUrl = 'https://api.spotify.com/v1/me/playlists';
 const baseSearchUrl = 'https://api.spotify.com/v1/search';
+const baseUsersUrl = 'https://api.spotify.com/v1/users/';
 
 const getHeader = {
   headers: new Headers({ 'Authorization': `Bearer ${localStorage.getItem("accessToken")}` }),
@@ -13,6 +14,31 @@ const postHeader = {
 };
 
 const SpotifyService = {
+  addSongToPlaylist: async (playlistId, trackUri) => {
+    var params = '?position=0&uris=' + trackUri;
+    const response = await fetch(basePlaylistUrl + playlistId + '/tracks' + params, postHeader);
+    return await response.json();
+  },
+
+  createPlaylist: async (userId, name, description, isPublic) => {
+    const header = {
+      method: 'POST',
+      headers: 
+        new Headers({ 
+          'Authorization': `Bearer ${localStorage.getItem("accessToken")}`,
+          'Content-Type': 'application/json'   
+        }),
+      body: JSON.stringify({
+        'name': name,
+        'description': description,
+        'public': isPublic
+      })
+    };
+
+    const response = await fetch(baseUsersUrl + userId + '/playlists', header);
+    return await response.json();
+  },
+
   getPlaylists: async () => {
     const response = await fetch(baseUserPlaylistUrl, getHeader);
     return await response.json();
@@ -23,17 +49,11 @@ const SpotifyService = {
     return await response.json();
   },
 
-  addSongToPlaylist: async (playlistId, trackUri) => {
-    var params = '?position=0&uris=' + trackUri;
-    const response = await fetch(basePlaylistUrl + playlistId + '/tracks' + params, postHeader);
-    return await response.json();
-  },
-
   search: async (keyword, typeString) => {
     var params = '?q=' + keyword + '&type=' + typeString;
     const response = await fetch(baseSearchUrl + params, getHeader);
     return await response.json();
-  },
+  }
 }
 
 export default SpotifyService;

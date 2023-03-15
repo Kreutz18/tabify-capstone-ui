@@ -1,3 +1,5 @@
+import 'react-sliding-pane/dist/react-sliding-pane.css';
+
 import React from 'react';
 import ReactSlidingPane from 'react-sliding-pane';
 import { HalfChevronIcon } from '../half-chevron-icon/half-chevron-icon';
@@ -5,18 +7,11 @@ import { Col, Form, InputGroup, Row, Table } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { LoadingSpinner } from '../LoadingSpinner';
 import { getTime } from '../time-service';
-import 'react-sliding-pane/dist/react-sliding-pane.css';
-
-import _, { add } from 'lodash';
 import SpotifyService from '../spotify-service';
 
-const headers = {
-  headers: new Headers({ 
-    'Authorization': `Bearer ${localStorage.getItem("accessToken")}`,
-    'Content-Type':  'application/json'
-  }),
-  method: 'get'
-};
+import _ from 'lodash';
+
+
 
 export class SlidePanel extends React.Component {
   constructor(props) {

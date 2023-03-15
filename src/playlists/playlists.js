@@ -1,15 +1,11 @@
 import { React, useEffect, useState } from 'react';
-import { Button, Col, Container, Row } from 'react-bootstrap';
+import { Col, Container, Row } from 'react-bootstrap';
 import { SlidePanel } from '../slide-panel/slide-panel';
 import { PlaylistTable } from './playlist-table/PlaylistTable';
 import { LoadingSpinner } from '../LoadingSpinner';
-import './playlists.scss';
 import SpotifyService from '../spotify-service';
-
-const headers = {
-  headers: new Headers({ 'Authorization': `Bearer ${localStorage.getItem("accessToken")}` }),
-  method: 'get'
-};
+import { CreatePlaylistModal, PlaylistModal } from './create-playlist-modal';
+import './playlists.scss';
 
 export function Playlists() {
   const selectPlaylistMessage = 'Please select a playlist';
@@ -26,13 +22,17 @@ export function Playlists() {
   const [selectedPlaylist, setSelectedPlaylist] = useState(null);
   
   useEffect(() => {
+    getPlaylists();
+  }, []);
+  
+  function getPlaylists() {
     setIsLoading(true);
     SpotifyService.getPlaylists().then((data) => {
       setPlaylists(data.items);
       setIsLoading(false);
     });
-  }, []);
-  
+  }
+
   function selectItem(event, item) {
     if (previousTarget) {
       if (previousTarget !== event.target) {
@@ -83,7 +83,7 @@ export function Playlists() {
                   <li className="list-item" key={el.id} value={el.name} onClick={(e) => {selectItem(e, el)}}>{el.name}</li>
                 )}
               </ul>
-              <Button className='playlist-button' style={{width: '100%'}} variant="dark"> Create Playlist</Button>
+              <PlaylistModal userId={currentUser.id} playlistCallback={() => (getPlaylists())}/>
             </div>
           </Col>
           <Col>
@@ -106,6 +106,3 @@ export function Playlists() {
     </>
   )
 }
-
-
-
