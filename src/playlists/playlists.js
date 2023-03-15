@@ -4,7 +4,7 @@ import { SlidePanel } from '../slide-panel/slide-panel';
 import { PlaylistTable } from './playlist-table/PlaylistTable';
 import { LoadingSpinner } from '../LoadingSpinner';
 import SpotifyService from '../spotify-service';
-import { CreatePlaylistModal, PlaylistModal } from './create-playlist-modal';
+import { PlaylistModal } from './create-playlist-modal';
 import './playlists.scss';
 
 export function Playlists() {

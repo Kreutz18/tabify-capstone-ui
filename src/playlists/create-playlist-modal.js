@@ -37,7 +37,6 @@ export class PlaylistModal extends React.Component {
   }
 
   handleTypeChange(event) {
-    console.log(!event.target.checked);
     this.setState({isPublic: !event.target.checked});
   }
 
