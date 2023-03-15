@@ -57,21 +57,21 @@ export class PlaylistModal extends React.Component {
 
   handleSubmit(event) {
     event.stopPropagation();
-    this.setState({invalid: _.isEmpty(this.state.name) ? true : false});
-    
-    if (!this.state.invalid) {
-      SpotifyService.createPlaylist(this.props.userId, this.state.name, this.state.description, this.state.isPublic).then((playlist) => {
-        this.props.playlistCallback();
-        this.handleClose();
-      })
-    }
+    this.setState({invalid: _.isEmpty(this.state.name) ? true : false}, () => {
+      if (!this.state.invalid) {
+        SpotifyService.createPlaylist(this.props.userId, this.state.name, this.state.description, this.state.isPublic).then((playlist) => {
+          this.props.playlistCallback();
+          this.handleClose();
+        });
+      }
+    });
   }
 
   render() {
     return (
       <>
         <Button style={{width: '100%'}} variant="dark" onClick={this.handleShow}> Create Playlist</Button>
-        <Modal show={this.state.show}>
+        <Modal show={this.state.show} onHide={this.handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>Create Playlist</Modal.Title>
           </Modal.Header>
