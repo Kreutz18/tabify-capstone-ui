@@ -13,6 +13,11 @@ const postHeader = {
   method: 'POST'
 };
 
+const deleteHeader = {
+  headers: new Headers({ 'Authorization': `Bearer ${localStorage.getItem("accessToken")}` }),
+  method: 'DELETE'
+};
+
 const SpotifyService = {
   addSongToPlaylist: async (playlistId, trackUri) => {
     var params = '?position=0&uris=' + trackUri;
@@ -53,6 +58,10 @@ const SpotifyService = {
     var params = '?q=' + keyword + '&type=' + typeString;
     const response = await fetch(baseSearchUrl + params, getHeader);
     return await response.json();
+  },
+
+  unfollowPlaylist: async (playlistId) => {
+    await fetch(basePlaylistUrl + playlistId + '/followers', deleteHeader);
   }
 }
 
