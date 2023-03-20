@@ -6,6 +6,7 @@ import { LoadingSpinner } from '../LoadingSpinner';
 import SpotifyService from '../spotify-service';
 import { PlaylistModal } from './create-playlist-modal';
 import './playlists.scss';
+import { DeletePlaylist } from './delete-playlist-modal';
 
 export function Playlists() {
   const selectPlaylistMessage = 'Please select a playlist';
@@ -28,6 +29,9 @@ export function Playlists() {
   function getPlaylists() {
     setIsLoading(true);
     SpotifyService.getPlaylists().then((data) => {
+      setSelectedPlaylist(null);
+      setPlaylistSelected(false);
+      setDisplayMessage(selectPlaylistMessage);
       setPlaylists(data.items);
       setIsLoading(false);
     });
@@ -75,8 +79,8 @@ export function Playlists() {
     <>
       <Container className='mt-5' fluid>
         <Row>
+          <label style={{width: '100%', textAlign: 'left', fontWeight: 500, fontSize: '20px'}}>Playlists</label>
           <Col md={3} lg={2}>
-            <label style={{width: '100%', textAlign: 'left', fontWeight: 500, fontSize: '20px'}}>Playlists</label>
             <div>
               <ul  className='border playlist-container' style={{paddingLeft: "0px", margin: 'auto'}}>
                 {playlists.map(el =>
@@ -87,6 +91,9 @@ export function Playlists() {
             </div>
           </Col>
           <Col>
+          {!hasError && playlistSelected && !isLoading && 
+            <DeletePlaylist playlist={selectedPlaylist} deleteCallback={() => (getPlaylists())} />
+          }
           {!hasError && playlistSelected ? (
             isLoading ? (
               <LoadingSpinner />
