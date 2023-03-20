@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 
 export function Validate() {
-
   const [ isLoggedIn, setIsLoggedIn ] = useState(false);
+
 
   useEffect(() => {
     setIsLoggedIn(localStorage.getItem("loggedIn"));
@@ -17,7 +17,7 @@ export function Validate() {
       localStorage.setItem("loggedIn", true);
       setIsLoggedIn(true);
     }
-  });
+  }, [isLoggedIn]);
 
   const getReturnedParamsFromSpotifyAuth = (hash) => {
     const stringAfterHashtag = hash.substring(1);

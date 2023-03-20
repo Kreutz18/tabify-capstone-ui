@@ -83,7 +83,7 @@ export function Playlists() {
                   <li className="list-item" key={el.id} value={el.name} onClick={(e) => {selectItem(e, el)}}>{el.name}</li>
                 )}
               </ul>
-              <PlaylistModal userId={currentUser.id} playlistCallback={() => (getPlaylists())}/>
+              {currentUser && <PlaylistModal userId={currentUser.id} playlistCallback={() => (getPlaylists())}/>}
             </div>
           </Col>
           <Col>

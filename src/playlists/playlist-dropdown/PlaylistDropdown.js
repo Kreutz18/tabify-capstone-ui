@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -18,7 +18,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
   const CustomMenu = React.forwardRef(
     ({ children, style, className, 'aria-labelledby': labeledBy }, ref) => {
-      const [value, setValue] = useState('');
 
       return (
         <div
@@ -28,8 +27,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
           aria-labelledby={labeledBy}>
           <ul className="list-unstyled" style={{margin: '0'}}>
             {React.Children.toArray(children).filter(
-              (child) =>
-                !value || child.props.children.toLowerCase().startsWith(value),
+              (child) => child.props.children.toLowerCase(),
             )}
           </ul>
         </div>

@@ -69,14 +69,14 @@ export class PlaylistModal extends React.Component {
   render() {
     return (
       <>
-        <Button style={{width: '100%'}} variant="dark" onClick={this.handleShow}> Create Playlist</Button>
+        <Button id='create-playlist-button' style={{width: '100%'}} variant="dark" onClick={this.handleShow}> Create Playlist</Button>
         <Modal show={this.state.show} onHide={this.handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>Create Playlist</Modal.Title>
           </Modal.Header>
           <Modal.Body>
           <FloatingLabel label="Name">
-            <Form.Control onChange={this.handleNameChange} type='text' placeholder='Name'></Form.Control>
+            <Form.Control id="create-playlist-name" onChange={this.handleNameChange} type='text' placeholder='Name'></Form.Control>
           </FloatingLabel>
           {this.state.invalid && <p style={{color: 'red'}}>Required</p>}
           <FloatingLabel className='mt-4' label='Description'>
@@ -88,7 +88,7 @@ export class PlaylistModal extends React.Component {
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={this.handleClose}>Close</Button>
-            <Button variant="primary" type='submit' onClick={this.handleSubmit}>Create</Button>
+            <Button id='create-playlist-submit-btn' variant="primary" type='submit' onClick={this.handleSubmit}>Create</Button>
           </Modal.Footer>
         </Modal>
       </>
