@@ -33,7 +33,7 @@ export class DeletePlaylist extends React.Component {
   render() {
     return (
       <>
-        <Button style={{float: 'right', marginBottom: '10px'}} variant="danger" onClick={this.handleShow}>Delete Playlist</Button>
+        <Button id='delete-playlist-btn' style={{float: 'right', marginBottom: '10px'}} variant="danger" onClick={this.handleShow}>Delete Playlist</Button>
         <Modal show={this.state.show} onHide={this.handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>Delete Playlist</Modal.Title>
@@ -43,7 +43,7 @@ export class DeletePlaylist extends React.Component {
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={this.handleClose}>Cancel</Button>
-            <Button variant="danger" onClick={this.deletePlaylist}>Delete</Button>
+            <Button id='confirm-delete-playlist-btn' variant="danger" onClick={this.deletePlaylist}>Delete</Button>
           </Modal.Footer>
         </Modal>
       </>

@@ -24,7 +24,7 @@ export function PlaylistTable({playlistTracks, selectedPlaylist, deleteCallback}
               <td className='align-left' key={item.track.album.id + '-' + item.track.id}>{item.track.album.name}</td>
               <td key={'time-' + item.track.id + '-' + item.track.id}>{getTime(item.track.duration_ms)}</td>
               <td key={'chevron-' + item.track.id} >
-                <PlaylistDropdown playlist = {selectedPlaylist} trackId = {item.track.id} deleteCallback={deleteCallback}/>
+                <PlaylistDropdown id={i} playlist={selectedPlaylist} trackId={item.track.id} deleteCallback={deleteCallback}/>
               </td>
             </tr>
           )
