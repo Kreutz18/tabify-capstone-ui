@@ -16,12 +16,12 @@ export function NavigationBar() {
           <Nav className="ms-auto">
             {!isLogin ? (
               <LinkContainer to="/login">
-              <Nav.Link>Login to Spotify</Nav.Link>
-            </LinkContainer>
+                <Nav.Link>Login to Spotify</Nav.Link>
+              </LinkContainer>
             ) :
             (
             <>
-             <LinkContainer to="/playlists">
+             <LinkContainer id='nav-playlist-link' to="/playlists">
               <Nav.Link>Playlists</Nav.Link>
             </LinkContainer>
             <LinkContainer to="/band">

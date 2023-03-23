@@ -1,8 +1,7 @@
 import 'react-sliding-pane/dist/react-sliding-pane.css';
-
+import './slide-panel.scss';
 import React from 'react';
 import ReactSlidingPane from 'react-sliding-pane';
-import { HalfChevronIcon } from '../half-chevron-icon/half-chevron-icon';
 import { Col, Form, InputGroup, Row, Table } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { LoadingSpinner } from '../LoadingSpinner';
@@ -40,9 +39,6 @@ export class SlidePanel extends React.Component {
     this.config = _.extend({}, this.config, this.props.config);
   }
   
-  componentDidUpdate(props) {
-
-  }
   
   toggleSlidePanel() {
     this.setState({isPanelOpen: !this.state.isPanelOpen});
@@ -73,7 +69,7 @@ export class SlidePanel extends React.Component {
           <SearchBar searchSongs={this.searchSongs} />
           <SlideTable loading={this.state.loading} results={this.results} playlistId={this.props.playlist.id} addSongCallback={() => (this.addSongCallback(this.props.playlist))}/>
         </ReactSlidingPane>
-        <div onClick={this.toggleSlidePanel}><HalfChevronIcon /></div>
+        <img id='slide-panel-btn' className="half-chevron-left" onClick={this.toggleSlidePanel} src={require('../half-circle-chevron-left.svg').default} alt="svg" />      
       </>
     );
   }  
@@ -82,7 +78,7 @@ export class SlidePanel extends React.Component {
 export function SearchBar({searchSongs}) {
   return (
     <InputGroup className="mb-3">
-      <Form.Control
+      <Form.Control id='search-song-input'
         placeholder="Search Songs"
         aria-label="Search Songs"
         onKeyUp={searchSongs}
@@ -122,7 +118,7 @@ export function SlideTable({loading, results, playlistId, addSongCallback}) {
                           <td key={item.artists[0].id + i}>{item.artists[0].name}</td>
                           <td key={item.id + '-time'}>{getTime(item.duration_ms)}</td>
                           <td>
-                            <FontAwesomeIcon style={{cursor: 'pointer'}} icon='fa-plus' onClick={() => (addSongToPlaylist(item.uri))}></FontAwesomeIcon>
+                            <FontAwesomeIcon id={'track-result-' + i} style={{cursor: 'pointer'}} icon='fa-plus' onClick={() => (addSongToPlaylist(item.uri))}></FontAwesomeIcon>
                           </td>
                         </tr>
                       )
