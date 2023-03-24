@@ -11,8 +11,8 @@ async function testLogin() {
   await driver.get("http://localhost:3000/home");
   await driver.get("http://localhost:3000/login");
   
-  await driver.findElement(webdriver.By.css('#login-username')).sendKeys('jesse_kreutzberger@yahoo.com');
-  await driver.findElement(webdriver.By.css('#login-password')).sendKeys('ShCSbX4VS9uA402tm!hT');
+  await driver.findElement(webdriver.By.css('#login-username')).sendKeys('');
+  await driver.findElement(webdriver.By.css('#login-password')).sendKeys('');
   await driver.findElement(webdriver.By.css('#login-button')).click();
   
   await driver.wait(webdriver.until.elementLocated(webdriver.By.xpath("//button[@data-testid='auth-accept']"))).click();
