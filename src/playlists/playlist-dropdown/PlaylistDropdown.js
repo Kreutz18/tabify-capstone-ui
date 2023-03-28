@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { TrackDetailsModal } from '../track-details-modal';
 
   const headers = {
   'Accept': 'application/json',
@@ -35,19 +36,24 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
     },
   )
 
-  export function PlaylistDropdown({id, playlist, trackId, deleteCallback}) {
+  export function PlaylistDropdown({id, playlist, track, deleteCallback}) {
     const user = JSON.parse(localStorage.getItem("user"));
+    const [showDetails, setShowDetails] = useState(false);
+
     return (
-      <Dropdown id={'dropdown-toggle-' + id}>
-        <Dropdown.Toggle as={CustomDropdown}></Dropdown.Toggle>
-        <Dropdown.Menu as={CustomMenu}>
-          {
-            playlist.owner.id === user.id && 
-              <Dropdown.Item id={'dropdown-delete-' + id} eventKey="1" onClick={() => (deleteFunction(playlist.id, trackId, deleteCallback))}>Delete</Dropdown.Item>
-          }
-          <Dropdown.Item eventKey="2">Details</Dropdown.Item>
-        </Dropdown.Menu>
-      </Dropdown>
+      <>
+        <Dropdown id={'dropdown-toggle-' + id}>
+          <Dropdown.Toggle as={CustomDropdown}></Dropdown.Toggle>
+          <Dropdown.Menu as={CustomMenu}>
+            {
+              playlist.owner.id === user.id && 
+                <Dropdown.Item id={'dropdown-delete-' + id} eventKey="1" onClick={() => (deleteFunction(playlist.id, track.id, deleteCallback))}>Delete</Dropdown.Item>
+            }
+            <Dropdown.Item id={'dropdown-details-' + id} eventKey="2" onClick={() => setShowDetails(true)}>Details</Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
+        {showDetails && <TrackDetailsModal track={track} closeModal={() => setShowDetails(false)}/>}
+      </>
     )
   }
 
