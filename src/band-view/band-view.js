@@ -1,28 +1,25 @@
-import { useEffect } from "react"
-import UltimateGuitarService from "../UltimateGuitarService";
+import { Tab } from "bootstrap";
+import { Tabs } from "react-bootstrap";
 
 export function BandView() {
 
-  useEffect(() => {
-    UltimateGuitarService.getChords().then((response) => {
-      console.log('CHORDS');
-      console.log(response);
-    });
-  });
-
-  useEffect(() => {
-    UltimateGuitarService.getTabs().then((response) => {
-      console.log('TABS');
-      for (let x = 0; x < response.lyrics.length; x++) {
-        console.log(response.lyrics[x]);
-        if (x === 5) {
-          console.log('\n');
-        }
-      }
-    });
-  });
-
   return (
-    <p>Band View Works!</p>
+    <NavigationTabs />
   )
+
+  function NavigationTabs() {
+    return (
+      <Tabs>
+        <Tab eventKey="lyrics" title="Lyrics">
+
+        </Tab>
+        <Tab eventKey="6-string" title="6-String">
+
+        </Tab>
+        <Tab eventKey="bass" title="Bass">
+
+        </Tab>
+      </Tabs>
+    )
+  }
 }
