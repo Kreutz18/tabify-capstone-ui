@@ -4,7 +4,6 @@ import { Modal, Button, Row, Col } from "react-bootstrap";
 export class TrackDetailsModal extends React.Component {
   constructor(props) {
     super(props);
-    console.log(props.track);
     this.state = {
       show: true
     };
@@ -44,8 +43,6 @@ export class TrackDetailsModal extends React.Component {
                 <a align="center" target="_blank" rel="noreferrer" href={this.props.track.external_urls.spotify}><img className="d-block" src={this.props.track.album.images[1].url} alt="album cover" width="150"/></a>
               </Col>
             </Row>
-            
-
           </Modal.Body>
           <Modal.Footer>
             <Button variant="primary" onClick={this.handleClose}>Close</Button>
