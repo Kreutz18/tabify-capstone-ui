@@ -28,7 +28,7 @@ import { TrackDetailsModal } from '../track-details-modal';
           aria-labelledby={labeledBy}>
           <ul className="list-unstyled" style={{margin: '0'}}>
             {React.Children.toArray(children).filter(
-              (child) => child.props.children.toLowerCase(),
+              (child) => child.props.children.toLowerCase()
             )}
           </ul>
         </div>
