@@ -1,5 +1,6 @@
 import React from "react";
 import { Pagination } from "react-bootstrap";
+import './paging.scss';
 
 export class Paging extends React.Component {
   constructor(props) {

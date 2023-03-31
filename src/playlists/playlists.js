@@ -59,10 +59,17 @@ export function Playlists() {
     updatePageOptions({offset: 0, currentPage: 1});
     fetchTracks(item.tracks.href);
   }
+
+  function addParamsToUrl(url) {
+    var params = "?offset=" + pageOptions.offset + "&limit=20";
+
+    return url + params; 
+  }
   
-  function fetchTracks(trackUrl) {
+  function fetchTracks(trackUrl, stayOnCurrentPage = false, resetPaging = false) {
     setIsLoading(true);
-    SpotifyService.getPlaylistTracks(trackUrl).then((tracks) => {
+    let url = stayOnCurrentPage ? addParamsToUrl(trackUrl) : trackUrl;
+    SpotifyService.getPlaylistTracks(url).then((tracks) => {
       setPlaylistTracks(tracks);
       setHasError(false);
       if (tracks.items && tracks.items.length > 0) {
@@ -71,8 +78,12 @@ export function Playlists() {
         setHasSongs(false);
         setDisplayMessage(addSongsMessage);
       }
+      if (!stayOnCurrentPage && resetPaging) {
+        updatePageOptions({offset: 0, currentPage: 1});
+      }
       initPageTotal(tracks);
       setIsLoading(false);
+      
     }, () => {
       setHasError(true);
       setDisplayMessage(errorMessage);
@@ -115,13 +126,13 @@ export function Playlists() {
               <LoadingSpinner />
             ) : (hasSongs ? (
               <>
-                <PlaylistTable playlistTracks={playlistTracks} selectedPlaylist={selectedPlaylist} deleteCallback={() => (fetchTracks(selectedPlaylist.tracks.href))}/>
+                <PlaylistTable playlistTracks={playlistTracks} selectedPlaylist={selectedPlaylist} deleteCallback={() => (fetchTracks(selectedPlaylist.tracks.href, true, false))}/>
                 {pageTotal > 1 && 
                   <Paging tracks={playlistTracks} 
                     pageTotal={pageTotal} 
                     pageOptions={pageOptions} 
                     updatePageOptions={(options) => updatePageOptions(options)} 
-                    getPage={(url) => fetchTracks(url)}/>
+                    getPage={(url) => fetchTracks(url, false, false)}/>
                 }
               </>
               ) : (<p>{displayMessage}</p>))
@@ -130,7 +141,7 @@ export function Playlists() {
           </Col>
           {playlistSelected && selectedPlaylist.owner.id === currentUser.id && 
             <Col sm={1}>
-              <SlidePanel playlist={selectedPlaylist} addSongCallback={(playlist) => (fetchTracks(playlist.tracks.href))}/>
+              <SlidePanel playlist={selectedPlaylist} addSongCallback={(playlist) => (fetchTracks(playlist.tracks.href, false, true))}/>
             </Col>
           }
         </Row>
