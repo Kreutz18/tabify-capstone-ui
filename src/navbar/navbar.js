@@ -20,17 +20,14 @@ export function NavigationBar() {
               </LinkContainer>
             ) :
             (
-            <>
-             <LinkContainer id='nav-playlist-link' to="/playlists">
-              <Nav.Link>Playlists</Nav.Link>
-            </LinkContainer>
-            <LinkContainer to="/band">
-              <Nav.Link>Band View</Nav.Link>
-            </LinkContainer>
-              <LinkContainer to="/logout">
-              <Nav.Link>Logout</Nav.Link>
-              </LinkContainer>
-            </>
+              <>
+                <LinkContainer id='nav-playlist-link' to="/playlists">
+                  <Nav.Link>Playlists</Nav.Link>
+                </LinkContainer>
+                <LinkContainer to="/logout">
+                  <Nav.Link>Logout</Nav.Link>
+                </LinkContainer>
+              </>
             )
             }
           </Nav>
