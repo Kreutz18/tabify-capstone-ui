@@ -50,7 +50,8 @@ const SpotifyService = {
   },
 
   getPlaylistTracks: async (trackUrl) => {
-    const response = await fetch(trackUrl + '?offset=0&limit=20', getHeader);
+    var paramsString = trackUrl.includes("?") ? '' : '?offset=0&limit=20';
+    const response = await fetch(trackUrl + paramsString, getHeader);
     return await response.json();
   },
 
