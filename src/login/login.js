@@ -6,6 +6,13 @@ const SPOTIFY_AUTHORIZE_ENDPOINT = "https://accounts.spotify.com/authorize";
 const REDIRECT_URL_AFTER_LOGIN = "http://localhost:3000/validate";
 const SPACE_DELIMITER = "%20";
 const SCOPES = [
+  "streaming",
+  "user-read-email",
+  "user-read-private",
+  "user-library-read",
+  "user-library-modify",
+  "user-read-playback-state",
+  "user-modify-playback-state",
   "user-read-currently-playing",
   "user-read-playback-state",
   "playlist-read-private",

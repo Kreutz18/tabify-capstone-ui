@@ -6,7 +6,9 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { faChevronDown, faChevronLeft, faMagnifyingGlass, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { faClock } from '@fortawesome/free-regular-svg-icons';
 
+
 function App() {
+
   return (
     <div className="App">
       <NavigationBar />

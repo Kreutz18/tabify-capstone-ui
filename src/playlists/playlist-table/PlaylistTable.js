@@ -3,7 +3,7 @@ import { Table } from "react-bootstrap";
 import { PlaylistDropdown } from "../playlist-dropdown/PlaylistDropdown";
 import { getTime } from "../../time-service";
 
-export function PlaylistTable({playlistTracks, selectedPlaylist, deleteCallback, showBandView}) {
+export function PlaylistTable({playlistTracks, selectedPlaylist, deleteCallback, showBandView, setSelectedTrack}) {
   return (
     <Table hover>
       <thead>
@@ -24,7 +24,14 @@ export function PlaylistTable({playlistTracks, selectedPlaylist, deleteCallback,
               <td className='align-left' key={item.track.artists[0].id + '-' + item.track.id}>{item.track.artists[0].name}</td>
               <td key={'time-' + item.track.id + '-' + item.track.id}>{getTime(item.track.duration_ms)}</td>
               <td key={'chevron-' + item.track.id} >
-                <PlaylistDropdown id={i} playlist={selectedPlaylist} track={item.track} deleteCallback={deleteCallback} showBandView={(track) => showBandView(track)}/>
+                <PlaylistDropdown 
+                  id={i} 
+                  playlist={selectedPlaylist} 
+                  track={item.track} 
+                  deleteCallback={deleteCallback} 
+                  showBandView={(track) => showBandView(track)}
+                  setSelectedTrack={(trackUri) => setSelectedTrack(trackUri)}
+                />
               </td>
             </tr>
           )
