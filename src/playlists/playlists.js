@@ -1,4 +1,4 @@
-import { React, useEffect, useRef, useState } from 'react';
+import { React, useEffect, useState } from 'react';
 import { Button, Col, Container, Row } from 'react-bootstrap';
 import { SlidePanel } from '../slide-panel/slide-panel';
 import { PlaylistTable } from './playlist-table/PlaylistTable';
@@ -10,7 +10,7 @@ import { DeletePlaylist } from './delete-playlist-modal';
 import { Paging } from '../paging';
 import { BandView } from '../band-view/band-view';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Musicplayer from '../music-player/musicplayer';
+import { MusicPlayer } from '../music-player/musicplayer';
 
 const VIEWS = {
   PLAYLIST: 'PLAYLIST',
@@ -34,8 +34,6 @@ export function Playlists() {
   const [pageOptions, setPageOptions] = useState({offset: 0, currentPage: 1});
   const [selectedView, setSelectedView] = useState(VIEWS.PLAYLIST);
   const [selectedTrack, setSelectedTrack] = useState(null);
-  const selectedTrackUri = useRef(null);
-  
   
   useEffect(() => {
     getPlaylists();
@@ -117,16 +115,6 @@ export function Playlists() {
     setSelectedTrack(track);
   }
 
-  // useEffect(() => {
-  //   updateCurrentSong();
-  // }, [selectedTrackUri]);
-
-  function updateCurrentSong(trackUri) {
-    console.log(trackUri)
-    selectedTrackUri.current = trackUri;
-    console.log(selectedTrackUri)
-  }
-
   const currentUser = JSON.parse(localStorage.getItem("user"));
 
   return (
@@ -159,7 +147,6 @@ export function Playlists() {
                     selectedPlaylist={selectedPlaylist} 
                     deleteCallback={() => (fetchTracks(selectedPlaylist.tracks.href, true, false))}
                     showBandView={(track) => handleViewChange(VIEWS.BAND, track)}
-                    setSelectedTrack={(trackUri) => updateCurrentSong(trackUri)}
                   />
                   {pageTotal > 1 && 
                     <Paging tracks={playlistTracks} 
@@ -196,7 +183,9 @@ export function Playlists() {
           }
         </Row>
         <Row>
-          <Musicplayer selectedTrack={selectedTrackUri.current}/>
+          <Col>
+            <MusicPlayer />
+          </Col>
         </Row>
       </Container>
     </>

@@ -36,7 +36,7 @@ import { TrackDetailsModal } from '../track-details-modal';
     },
   )
 
-  export function PlaylistDropdown({id, playlist, track, deleteCallback, showBandView, setSelectedTrack}) {
+  export function PlaylistDropdown({id, playlist, track, deleteCallback, showBandView}) {
     const user = JSON.parse(localStorage.getItem("user"));
     const [showDetails, setShowDetails] = useState(false);
 
@@ -45,7 +45,6 @@ import { TrackDetailsModal } from '../track-details-modal';
         <Dropdown id={'dropdown-toggle-' + id}>
           <Dropdown.Toggle as={CustomDropdown}></Dropdown.Toggle>
           <Dropdown.Menu as={CustomMenu}>
-            <Dropdown.Item id={'dropdown-play-' + id} eventKey="1" onClick={() => setSelectedTrack(track.uri)}>Play</Dropdown.Item>
             {
               playlist.owner.id === user.id && 
                 <Dropdown.Item id={'dropdown-delete-' + id} eventKey="2" onClick={() => (deleteFunction(playlist.id, track.id, deleteCallback))}>Delete</Dropdown.Item>

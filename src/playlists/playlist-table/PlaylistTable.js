@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Table } from "react-bootstrap";
 import { PlaylistDropdown } from "../playlist-dropdown/PlaylistDropdown";
 import { getTime } from "../../time-service";
+import MusicPlayerService from "../../music-player-service";
 
 export function PlaylistTable({playlistTracks, selectedPlaylist, deleteCallback, showBandView, setSelectedTrack}) {
   return (
@@ -18,7 +19,7 @@ export function PlaylistTable({playlistTracks, selectedPlaylist, deleteCallback,
       <tbody>
         {playlistTracks.items?.map((item, i) => {
           return (
-            <tr key={i}>
+            <tr style={{cursor: 'pointer'}} key={i} onDoubleClick={() => updateCurrentSong(item.track.uri)}>
               <td className='align-left' key={'number-' + item.track.id}>{i + 1}</td>
               <td className='align-left' key={'name-' + item.track.id}>{item.track.name}</td>
               <td className='align-left' key={item.track.artists[0].id + '-' + item.track.id}>{item.track.artists[0].name}</td>
@@ -30,7 +31,6 @@ export function PlaylistTable({playlistTracks, selectedPlaylist, deleteCallback,
                   track={item.track} 
                   deleteCallback={deleteCallback} 
                   showBandView={(track) => showBandView(track)}
-                  setSelectedTrack={(trackUri) => setSelectedTrack(trackUri)}
                 />
               </td>
             </tr>
@@ -39,4 +39,8 @@ export function PlaylistTable({playlistTracks, selectedPlaylist, deleteCallback,
       </tbody>
     </Table>
   )
+}
+
+function updateCurrentSong(trackUri) {
+  MusicPlayerService.changeSong(trackUri);
 }

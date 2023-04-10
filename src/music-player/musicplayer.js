@@ -1,24 +1,36 @@
-import { useState, useEffect } from "react"
+import { useEffect, useState } from 'react';
 import SpotifyPlayer from 'react-spotify-web-playback';
 
-export default function Musicplayer({selectedTrackUri}) {
+export function MusicPlayer() {
     const givenToken = localStorage.getItem("accessToken");
-    console.log("Musicplayer:" + selectedTrackUri)
-    // console.log(selectedTrackUri)
+    const [trackUri, setTrackUri] = useState(null);
+    
+    useEffect(() => {
+        const updateSong = () => {
+            console.log('UPDATE SONG');
+
+            setTrackUri(localStorage.getItem('trackUri'));
+        };
+
+        window.addEventListener('change_song', () => updateSong());
+        return () => window.removeEventListener('change_song', updateSong());
+    }, [trackUri]);
+
+
     return ( 
-        <SpotifyPlayer
-        token={givenToken}
-        uris={selectedTrackUri}
-        styles={{
-            activeColor: '#fff',
-            bgColor: '#333',
-            color: '#fff',
-            loaderColor: '#fff',
-            sliderColor: '#1cb954',
-            trackArtistColor: '#ccc',
-            trackNameColor: '#fff',
-          }}
-        play={true}
-    />
+        trackUri && <SpotifyPlayer
+            token={givenToken}
+            uris={trackUri}
+            styles={{
+                activeColor: '#fff',
+                bgColor: '#333',
+                color: '#fff',
+                loaderColor: '#fff',
+                sliderColor: '#1cb954',
+                trackArtistColor: '#ccc',
+                trackNameColor: '#fff',
+            }}
+            play={trackUri ? true : false}
+        />
     )
 }

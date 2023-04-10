@@ -3,7 +3,6 @@ import { Row, Tabs } from "react-bootstrap";
 import "./band-view.scss";
 
 export function BandView(props) {
-  console.log(props);
   return (
     <NavigationTabs />
   )
