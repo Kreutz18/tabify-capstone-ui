@@ -51,12 +51,17 @@ async function testDeletePlaylist() {
   await driver.wait(webdriver.until.elementLocated(webdriver.By.css('#confirm-delete-playlist-btn'))).click();
 }
 
+async function testMusicPlayer() {
+  await driver.findElement(webdriver.By.id('musicPlayer')).click();
+}
+
 async function testApp() {
   await testLogin();
   await testCreatePlaylist();
   await testAddSongToPlaylist();
   await testRemoveSongFromPlaylist();
   await testDeletePlaylist();
+  await testMusicPlayer();
 
   driver.close();
 }

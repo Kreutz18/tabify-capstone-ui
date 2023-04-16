@@ -186,7 +186,7 @@ export function Playlists() {
         </Row>
         <Row>
           <Col>
-            <MusicPlayer />
+            <MusicPlayer id="musicPlayer"/>
           </Col>
         </Row>
       </Container>
