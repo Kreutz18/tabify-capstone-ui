@@ -35,7 +35,7 @@ export class DeletePlaylist extends React.Component {
   render() {
     return (
       <>
-        <FontAwesomeIcon style={{float: 'right', marginTop: '3px'}} icon="fa-regular fa-trash-can" onClick={(e) => {this.handleShow(e)}}></FontAwesomeIcon>
+        <FontAwesomeIcon id='delete-playlist-btn' style={{float: 'right', marginTop: '3px'}} icon="fa-regular fa-trash-can" onClick={(e) => {this.handleShow(e)}}></FontAwesomeIcon>
         <Modal show={this.state.show} onHide={this.handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>Delete Playlist</Modal.Title>
