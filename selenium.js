@@ -37,6 +37,11 @@ async function testAddSongToPlaylist() {
   await driver.findElement(webdriver.By.className("slide-pane__close")).click();
 }
 
+async function testMusicPlayer() {
+  await driver.wait(webdriver.until.elementLocated(webdriver.By.css('#trackTableRow-0'))).dblclick();
+  await driver.wait(webdriver.until.elementLocated(webdriver.By.xpath("//button[@class='rswp__toggle _ControlsButtonRSWP __3hmsj']")), 10000).click();
+}
+
 async function testRemoveSongFromPlaylist() {
   let dropdown = await driver.wait(webdriver.until.elementLocated(webdriver.By.xpath("//*[@id='dropdown-toggle-0']")));
   await dropdown.findElement(webdriver.By.id('dropdown-chevron-icon')).click();
@@ -51,17 +56,14 @@ async function testDeletePlaylist() {
   await driver.wait(webdriver.until.elementLocated(webdriver.By.css('#confirm-delete-playlist-btn'))).click();
 }
 
-async function testMusicPlayer() {
-  await driver.findElement(webdriver.By.id('musicPlayer')).click();
-}
 
 async function testApp() {
   await testLogin();
   await testCreatePlaylist();
   await testAddSongToPlaylist();
+  await testMusicPlayer();
   await testRemoveSongFromPlaylist();
   await testDeletePlaylist();
-  await testMusicPlayer();
 
   driver.close();
 }

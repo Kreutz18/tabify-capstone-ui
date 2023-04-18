@@ -19,7 +19,7 @@ export function PlaylistTable({playlistTracks, selectedPlaylist, deleteCallback,
       <tbody>
         {playlistTracks.items?.map((item, i) => {
           return (
-            <tr style={{cursor: 'pointer'}} key={i} onDoubleClick={() => updateCurrentSong(item.track.uri)}>
+            <tr className='trackTableRow' id={'trackTableRowItem-'+ i} style={{cursor: 'pointer'}} key={i} onDoubleClick={() => updateCurrentSong(item.track.uri)}>
               <td className='align-left' key={'number-' + item.track.id}>{i + 1}</td>
               <td className='align-left' key={'name-' + item.track.id}>{item.track.name}</td>
               <td className='align-left' key={item.track.artists[0].id + '-' + item.track.id}>{item.track.artists[0].name}</td>
