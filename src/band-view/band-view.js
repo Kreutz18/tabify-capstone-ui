@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Tab } from "bootstrap";
 import { useEffect, useState } from "react";
 import { Button, Row, Table, Tabs } from "react-bootstrap";
+import SpotifyService from "../spotify-service";
 import UltimateGuitarService from "../UltimateGuitarService";
 import "./band-view.scss";
 
@@ -19,11 +20,19 @@ export function BandView({track}) {
   const [isBassTabSelected, setIsBassTabSelected] = useState(false);
   const [selectedGuitarTab, setSelectedGuitarTab] = useState(null);
   const [isGuitarTabSelected, setIsGuitarTabSelected] = useState(false);
+  const [selectedLyrics, setSelectedLyrics] = useState(null);
+  const [isLyricsSelected, setIsLyricsSelected] = useState(false);
   
   useEffect(() => {
     setLoading(true);
-    UltimateGuitarService.getTabList(track.name, track.artists[0].name).then((response) => {
-      setTabs(response.tabs);
+    let promises = [
+      UltimateGuitarService.getTabList(track.name, track.artists[0].name),
+      SpotifyService.getLyrics(track.id)
+    ];
+
+    Promise.all(promises).then((responses) => {
+      setTabs(responses[0].tabs);
+      setSelectedLyrics(responses[1].lines);
       setLoading(false);
     });
   }, []);
@@ -48,7 +57,7 @@ export function BandView({track}) {
           onSelect={(k) => setSelectedNav(k)}
         >
           <Tab active={selectedNav === NAV_TABS.LYRICS ? true : false} eventKey={NAV_TABS.LYRICS} title="Lyrics">
-            
+            {!loading && selectedLyrics && selectedNav === NAV_TABS.LYRICS && <DisplayLyrics />}
           </Tab>
           <Tab active={selectedNav === NAV_TABS.SIX_STRING ? true : false} eventKey={NAV_TABS.SIX_STRING} title="6-String">
             {!loading && !isGuitarTabSelected && <TabTable />}
@@ -106,6 +115,18 @@ export function BandView({track}) {
         </Row>
       </>
     )
+  }
+
+  function DisplayLyrics() {
+    let lyrics = '';
+    for (let x = 0; x < selectedLyrics.length; x++) {
+      lyrics += selectedLyrics[x].words + '\r\n';
+    }
+    return (
+      <Row className="justify-content-center" style={{textAlign: 'start'}}>
+        <pre>{lyrics}</pre>
+      </Row>
+    );
   }
 
   function TabTable() {
