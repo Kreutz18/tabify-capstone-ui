@@ -4,8 +4,14 @@ const UltimateGuitarService = {
     return await response.json();
   },
 
-  getTabs: async () => {
-    const response = await fetch('/api/tabs/?url=' + 'https://tabs.ultimate-guitar.com/tab/eagles/hotel-california-tabs-23671');
+  getTabList: async (title, artist) => {
+    let params = title + ' ' + artist;
+    const response = await fetch('/api/tabs/search?title=' + params);
+    return await response.json();
+  },
+
+  getTab: async (tabUrl) => {
+    const response = await fetch ('/api/tabs?url=' + tabUrl);
     return await response.json();
   }
 }

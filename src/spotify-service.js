@@ -63,6 +63,11 @@ const SpotifyService = {
 
   unfollowPlaylist: async (playlistId) => {
     await fetch(basePlaylistUrl + playlistId + '/followers', deleteHeader);
+  },
+
+  getLyrics: async (trackId) => {
+    const response = await fetch('https://spotify-lyric-api.herokuapp.com/?url=https://open.spotify.com/track/' + trackId + '?autoplay=true');
+    return await response.json();
   }
 }
 
