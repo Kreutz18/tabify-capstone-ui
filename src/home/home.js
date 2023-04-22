@@ -55,9 +55,15 @@ export function Home() {
           How do I begin using Tabify?
         </div>
 
-        <div style={{fontSize: '20px', fontColor: 'blue', textAlign: "left", padding: "25px 10px 0px", margin:'20px, 100px'}}>
-          Please click on the 'Login to Spotify' prompt and navigate to the 'Playlists' view. From there you should have your Spotify Playlists already imported! Click on a track to begin playing a song off your playlist. Click on the 3 dots to the left to view other key track details such as album artwork, release dates, and track duration. You can also view the song's tab information from there. After clicking on a selected 6 String or Bass, you can see the chords from there!
-        </div>
+        <ul style={{fontSize: '20px', fontColor: 'blue', textAlign: "left", padding: "25px 10px 0px", margin:'20px, 100px'}}>
+         <li>Login into Spotify: On the main screen, there should be a button labeled 'Login into Spotify'. Click on this button to login with your Spotify account. Once you've successfully logged in, you should see a message confirming that you're now logged in. </li>
+         <li>Playlists: Once you've logged in, you can view your playlists by clicking on the 'Playlists' view. This should display a list of your playlists </li>
+         <li>Song Information: Clicking on a playlist will take you to a screen where you can view the songs in that playlist. Each song should display the album art, song title, artist, and other details such as the album name and release date once clicking on the "Details" button. </li>
+         <li>Guitar Relevant Details: If you're a guitar player, you can also see guitar relevant details such as the lyrics, 6 String Chords, and Bass Chords. To view these details, click on the “Show Tabs” button on the song on your playlist that you're interested in </li>
+         <li>Play Song: To play a song, simply click on the song title in the playlist. This should start playing the song in the app! </li>
+         <li></li>
+         <li>That's it! With these simple steps, you should be able to login, view your playlists, access song information, and see guitar relevant details. Have fun exploring your music!</li>
+        </ul>
       </>
     ):(
       <LoadingSpinner />
