@@ -10,7 +10,9 @@ export function NavigationBar() {
   return (
     <Navbar collapseOnSelect bg="dark" variant="dark" expand="md">
       <Container fluid>
-        <Navbar.Brand href="/home" className="tabify-logo">Tabify</Navbar.Brand>
+        <Navbar.Brand href="/home" className="tabify-logo">
+          <img src="image/tabifylogo.png"></img>
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
