@@ -65,9 +65,10 @@ export class Paging extends React.Component {
       let showRightEllipsis = this.state.currentPage + 3 < this.props.pageTotal;
       this.setState({showLeftEllipsis: true, showRightEllipsis: showRightEllipsis, pageItemStart: start, pageItemEnd: end});
     } else {
-      let start = this.props.pageTotal - 6;
+      let start = this.props.pageTotal - 6 === 0 ? 1 : this.props.pageTotal - 6;
       let end = this.props.pageTotal;
-      this.setState({showLeftEllipsis: true, showRightEllipsis: false, pageItemStart: start, pageItemEnd: end});
+      let showLeftEllipsis = this.props.pageTotal - 6 === 0 ? false : true;
+      this.setState({showLeftEllipsis: showLeftEllipsis, showRightEllipsis: false, pageItemStart: start, pageItemEnd: end});
     }
     this.setState({loading: false});
   }

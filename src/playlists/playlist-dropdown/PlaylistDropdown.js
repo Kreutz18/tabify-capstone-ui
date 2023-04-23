@@ -47,10 +47,10 @@ import { TrackDetailsModal } from '../track-details-modal';
           <Dropdown.Menu as={CustomMenu}>
             {
               playlist.owner.id === user.id && 
-                <Dropdown.Item id={'dropdown-delete-' + id} eventKey="1" onClick={() => (deleteFunction(playlist.id, track.id, deleteCallback))}>Delete</Dropdown.Item>
+                <Dropdown.Item id={'dropdown-delete-' + id} eventKey="2" onClick={() => (deleteFunction(playlist.id, track.id, deleteCallback))}>Delete</Dropdown.Item>
             }
-            <Dropdown.Item id={'dropdown-details-' + id} eventKey="2" onClick={() => setShowDetails(true)}>Details</Dropdown.Item>
-            <Dropdown.Item id={'tab-details-' + id} eventKey="3" onClick={() => showBandView(track)}>Show Tab</Dropdown.Item>
+            <Dropdown.Item id={'dropdown-details-' + id} eventKey="3" onClick={() => setShowDetails(true)}>Details</Dropdown.Item>
+            <Dropdown.Item id={'tab-details-' + id} eventKey="4" onClick={() => showBandView(track)}>Show Tab</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
         {showDetails && <TrackDetailsModal track={track} closeModal={() => setShowDetails(false)}/>}

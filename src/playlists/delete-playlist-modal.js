@@ -1,3 +1,4 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { Button, Modal } from "react-bootstrap";
 import SpotifyService from "../spotify-service";
@@ -15,7 +16,8 @@ export class DeletePlaylist extends React.Component {
     this.deletePlaylist = this.deletePlaylist.bind(this);
   }
 
-  handleShow() {
+  handleShow(event) {
+    event.stopPropagation();
     this.setState({show: true});
   }
 
@@ -33,7 +35,7 @@ export class DeletePlaylist extends React.Component {
   render() {
     return (
       <>
-        <Button id='delete-playlist-btn' style={{float: 'right', marginBottom: '10px'}} variant="danger" onClick={this.handleShow}>Delete Playlist</Button>
+        <FontAwesomeIcon id='delete-playlist-btn' style={{float: 'right', marginTop: '3px'}} icon="fa-regular fa-trash-can" onClick={(e) => {this.handleShow(e)}}></FontAwesomeIcon>
         <Modal show={this.state.show} onHide={this.handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>Delete Playlist</Modal.Title>

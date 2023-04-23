@@ -118,14 +118,19 @@ export function Playlists() {
 
   return (
     <>
-      <Container className='mt-5' fluid>
+      <Container className='playlist-view' fluid>
         <Row>
           <label style={{width: '100%', textAlign: 'left', fontWeight: 500, fontSize: '20px'}}>Playlists</label>
-          <Col md={3} lg={2}>
+          <Col md={3}>
             <div>
               <ul  className='border playlist-container' style={{paddingLeft: "0px", margin: 'auto'}}>
                 {playlists.map(el =>
-                  <li className="list-item" key={el.id} value={el.name} onClick={(e) => {selectItem(e, el)}}>{el.name}</li>
+                  <li className="list-item" key={el.id} value={el.name} onClick={(e) => {selectItem(e, el)}}>
+                    {el.name}
+                    {!hasError && playlistSelected && el.id === selectedPlaylist.id && !isLoading && 
+                      <DeletePlaylist playlist={selectedPlaylist} deleteCallback={() => getPlaylists()} />
+                    }
+                  </li>
                 )}
               </ul>
               {!isLoading && currentUser && selectedView === VIEWS.PLAYLIST && <PlaylistModal userId={currentUser.id} playlistCallback={() => (getPlaylists())}/>}
@@ -133,9 +138,6 @@ export function Playlists() {
           </Col>
           {selectedView === VIEWS.PLAYLIST ? ( 
             <Col>
-              {!hasError && playlistSelected && !isLoading && selectedView !== VIEWS.BAND && 
-                <DeletePlaylist playlist={selectedPlaylist} deleteCallback={() => (getPlaylists())} />
-              }
               {!hasError && playlistSelected ? (
               isLoading ? (
                 <LoadingSpinner />

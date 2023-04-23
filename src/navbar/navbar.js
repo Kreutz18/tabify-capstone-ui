@@ -8,9 +8,11 @@ export function NavigationBar() {
   const isLogin = localStorage.getItem("loggedIn");
 
   return (
-    <Navbar collapseOnSelect bg="dark" variant="dark" expand="md">
+    <Navbar collapseOnSelect bg="black" variant="dark" expand="md">
       <Container fluid>
-        <Navbar.Brand href="/home" className="tabify-logo">Tabify</Navbar.Brand>
+        <Navbar.Brand href="/home" className="tabify-logo">
+        <img src={require('./tabifylogo.png')} alt='tabify' width={"133px"} height={"30px"} />
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
