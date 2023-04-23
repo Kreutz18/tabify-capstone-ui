@@ -23,6 +23,9 @@ export function BandView({track}) {
   const [selectedLyrics, setSelectedLyrics] = useState(null);
   const [isLyricsSelected, setIsLyricsSelected] = useState(false);
   
+  const hasBassTabs = false;
+
+
   useEffect(() => {
     setLoading(true);
     let promises = [
@@ -148,9 +151,11 @@ export function BandView({track}) {
   }
 
   function buildBassTableRows() {
+    var foundTabs = false;
     const rows = [];
     for (let x = 0; x < tabs.length; x++) {
       if (tabs[x].type === 'bass') {
+        foundTabs = true;
         rows.push(
           <tr key={'bass-' + x}>
             <td className="align-left" key={'bass-songName-' + x}><a className="clickable" style={{fontColor: 'blue',textDecoration: 'none'}} onClick={() => getTabByUrl(tabs[x].href)}>{tabs[x].songName}</a></td>
@@ -159,8 +164,32 @@ export function BandView({track}) {
           </tr>
         )
       }
+
+      if(foundTabs = false)
+      {
+        rows.push(
+          <tr>
+            <td className="align-left">NO TABS FOUND!</td>
+            <td className="align-left"></td>
+            <td className="align-left"></td>
+          </tr>
+        )
+      }
     }
 
+    return rows;
+  }
+
+  function buildEmptyBassTableRows()
+  {
+    const rows = [];
+    rows.push(
+      <tr>
+        <td className="align-left">NO TABS FOUND!</td>
+        <td className="align-left"></td>
+        <td className="align-left"></td>
+      </tr>
+    )
     return rows;
   }
   
@@ -176,6 +205,7 @@ export function BandView({track}) {
           </tr>
         )
       }
+
     }
 
     return rows;

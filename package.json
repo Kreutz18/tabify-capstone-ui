@@ -27,7 +27,8 @@
     "react-sliding-pane": "^7.3.0",
     "sass": "^1.58.3",
     "selenium-webdriver": "^4.8.1",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "logo": "file:./image/tabifylogo.PNG"
   },
   "scripts": {
     "start": "react-scripts start",
