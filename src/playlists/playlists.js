@@ -119,7 +119,7 @@ export function Playlists() {
 
   return (
     <>
-      <Container className='mt-5' fluid>
+      <Container className='playlist-view' fluid>
         <Row>
           <label style={{width: '100%', textAlign: 'left', fontWeight: 500, fontSize: '20px'}}>Playlists</label>
           <Col md={3}>
@@ -183,11 +183,6 @@ export function Playlists() {
               <SlidePanel playlist={selectedPlaylist} addSongCallback={(playlist) => (fetchTracks(playlist.tracks.href, false, true))}/>
             </Col>
           }
-        </Row>
-        <Row className='music-player-row'>
-          <Col xs={12} className='music-player-col'>
-            <MusicPlayer id="musicPlayer"/>
-          </Col>
         </Row>
       </Container>
     </>

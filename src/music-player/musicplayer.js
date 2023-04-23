@@ -7,8 +7,6 @@ export function MusicPlayer() {
     
     useEffect(() => {
         const updateSong = () => {
-            console.log('UPDATE SONG');
-
             setTrackUri(localStorage.getItem('trackUri'));
         };
 

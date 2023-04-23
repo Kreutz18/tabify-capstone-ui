@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Tab } from "bootstrap";
 import { useEffect, useState } from "react";
 import { Button, Row, Table, Tabs } from "react-bootstrap";
+import { LoadingSpinner } from "../LoadingSpinner";
 import SpotifyService from "../spotify-service";
 import UltimateGuitarService from "../UltimateGuitarService";
 import "./band-view.scss";
@@ -37,12 +38,11 @@ export function BandView({track}) {
     Promise.all(promises).then((responses) => {
       setTabs(responses[0].tabs);
       initializeTabState(responses[0].tabs);
-      console.log(responses[1]);
       setSelectedLyrics(responses[1].error ? null : responses[1].lines);
       setHasLyrics(responses[1].error ? false : true);
       setLoading(false);
     })
-  }, []);
+  }, [track]);
 
 
   return (
@@ -79,16 +79,22 @@ export function BandView({track}) {
           activeKey={selectedNav}
           onSelect={(k) => setSelectedNav(k)}
         >
-          <Tab active={selectedNav === NAV_TABS.LYRICS ? true : false} eventKey={NAV_TABS.LYRICS} title="Lyrics">
+          <Tab active={selectedNav === NAV_TABS.LYRICS ? true : false} 
+            style={{marginBottom: '100px'}} eventKey={NAV_TABS.LYRICS} title="Lyrics">
+            {loading && <div style={{marginTop: '20px'}}><LoadingSpinner /></div>}
             {!loading && selectedLyrics && selectedNav === NAV_TABS.LYRICS && <DisplayLyrics />}
-            {!loading && !hasGuitarTabs && <h3>Lyrics for this track are not available</h3>}
+            {!loading && !hasLyrics && <h3>Lyrics for this track are not available</h3>}
           </Tab>
-          <Tab active={selectedNav === NAV_TABS.SIX_STRING ? true : false} eventKey={NAV_TABS.SIX_STRING} title="6-String">
+          <Tab active={selectedNav === NAV_TABS.SIX_STRING ? true : false} 
+            style={{marginBottom: '100px'}} eventKey={NAV_TABS.SIX_STRING} title="6-String">
+            {loading && <div style={{marginTop: '20px'}}><LoadingSpinner /></div>}
             {!loading && !isGuitarTabSelected && hasGuitarTabs && <TabTable />}
             {!loading && isGuitarTabSelected && selectedGuitarTab && <TabDisplay />}
             {!loading && !hasGuitarTabs && <h3>Guitar tabs this track are not available</h3>}
           </Tab>
-          <Tab active={selectedNav === NAV_TABS.BASS ? true : false} eventKey={NAV_TABS.BASS} title="Bass">
+          <Tab active={selectedNav === NAV_TABS.BASS ? true : false} 
+            style={{marginBottom: '100px'}} eventKey={NAV_TABS.BASS} title="Bass">
+            {loading && <div style={{marginTop: '20px'}}><LoadingSpinner /></div>}
             {!loading && !isBassTabSelected && hasBassTabs && <TabTable />}
             {!loading && isBassTabSelected && selectedBassTab && <TabDisplay />}
             {!loading && !hasBassTabs && <h3>Bass tabs for this track are not available</h3>}
@@ -135,7 +141,7 @@ export function BandView({track}) {
             </Button>
           </div>
         </Row>
-        <Row className="justify-content-center" style={{textAlign: 'start'}}>
+        <Row className="justify-content-center" style={{textAlign: 'start', marginBottom: '100px'}}>
           {isGuitarTabSelected && selectedNav === NAV_TABS.SIX_STRING && <pre>{selectedGuitarTab}</pre>}
           {isBassTabSelected && selectedNav === NAV_TABS.BASS && <pre>{selectedBassTab}</pre>}
         </Row>
@@ -179,7 +185,7 @@ export function BandView({track}) {
       if (tabs[x].type === 'bass') {
         rows.push(
           <tr key={'bass-' + x}>
-            <td className="align-left" key={'bass-songName-' + x}><a className="clickable" style={{fontColor: 'blue',textDecoration: 'none'}} onClick={() => getTabByUrl(tabs[x].href)}>{tabs[x].songName}</a></td>
+            <td className="align-left" key={'bass-songName-' + x}><Button className="clickable" variant='link' style={{fontColor: 'blue',textDecoration: 'none'}} onClick={() => getTabByUrl(tabs[x].href)}>{tabs[x].songName}</Button></td>
             <td className="align-left" key={'bass-rating-' + x}>{tabs[x].rating}</td>
             <td className="align-left" key={'bass-type-' + x}>{tabs[x].type}</td>
           </tr>
@@ -197,7 +203,7 @@ export function BandView({track}) {
       if (tabs[x].type !== 'bass') {
         rows.push(
           <tr key={'guitar-' + x}>
-            <td className="align-left" key={'guitar-songName-' + x}><a className="clickable" style={{fontColor: 'blue',textDecoration: 'none'}} onClick={() => getTabByUrl(tabs[x].href)}>{tabs[x].songName}</a></td>
+            <td className="align-left" key={'guitar-songName-' + x}><Button variant='link' className="clickable" style={{fontColor: 'blue',textDecoration: 'none'}} onClick={() => getTabByUrl(tabs[x].href)}>{tabs[x].songName}</Button></td>
             <td className="align-left" key={'guitar-rating-' + x}>{tabs[x].rating}</td>
             <td className="align-left" key={'guitar-type-' + x}>{tabs[x].type}</td>
           </tr>

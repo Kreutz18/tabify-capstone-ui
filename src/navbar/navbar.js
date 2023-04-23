@@ -11,7 +11,7 @@ export function NavigationBar() {
     <Navbar collapseOnSelect bg="black" variant="dark" expand="md">
       <Container fluid>
         <Navbar.Brand href="/home" className="tabify-logo">
-        <img src={require('./tabifylogo.png')} width={"133px"} height={"30px"} />
+        <img src={require('./tabifylogo.png')} alt='tabify' width={"133px"} height={"30px"} />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">

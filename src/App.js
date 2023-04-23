@@ -5,6 +5,7 @@ import { AppRouter } from './AppRouter';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faChevronDown, faChevronLeft, faMagnifyingGlass, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { faClock, faTrashCan } from '@fortawesome/free-regular-svg-icons';
+import { MusicPlayer } from './music-player/musicplayer';
 
 
 function App() {
@@ -13,6 +14,9 @@ function App() {
     <div className="App">
       <NavigationBar />
       <AppRouter />
+      <div className='music-player'>
+        <MusicPlayer id="musicPlayer"/>
+      </div>
     </div>
   );
 }
