@@ -23,6 +23,7 @@ export function MusicPlayer() {
             uris={trackUri}
             styles={{
                 activeColor: '#fff',
+                width: '100%',
                 bgColor: '#333',
                 color: '#fff',
                 loaderColor: '#fff',

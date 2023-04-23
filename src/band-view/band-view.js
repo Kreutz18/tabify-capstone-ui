@@ -21,9 +21,10 @@ export function BandView({track}) {
   const [selectedGuitarTab, setSelectedGuitarTab] = useState(null);
   const [isGuitarTabSelected, setIsGuitarTabSelected] = useState(false);
   const [selectedLyrics, setSelectedLyrics] = useState(null);
-  const [isLyricsSelected, setIsLyricsSelected] = useState(false);
+  const [hasBassTabs, setHasBassTabs] = useState(true);
+  const [hasGuitarTabs, setHasGuitarTabs] = useState(true);
+  const [hasLyrics, setHasLyrics] = useState(true);
   
-  const hasBassTabs = false;
 
 
   useEffect(() => {
@@ -35,9 +36,12 @@ export function BandView({track}) {
 
     Promise.all(promises).then((responses) => {
       setTabs(responses[0].tabs);
-      setSelectedLyrics(responses[1].lines);
+      initializeTabState(responses[0].tabs);
+      console.log(responses[1]);
+      setSelectedLyrics(responses[1].error ? null : responses[1].lines);
+      setHasLyrics(responses[1].error ? false : true);
       setLoading(false);
-    });
+    })
   }, []);
 
 
@@ -52,23 +56,42 @@ export function BandView({track}) {
     </>
   )
 
+  function initializeTabState(tabList) {
+    var bassCount = 0;
+    var guitarCount = 0;
+    for (let x = 0; x < tabList.length; x++) {
+      if (tabList[x].type === 'bass') {
+        bassCount++;
+      } else {
+        guitarCount++;
+      }
+    }
+
+    setHasBassTabs(bassCount > 0 ? true : false);
+    setHasGuitarTabs(guitarCount > 0 ? true : false);
+  }
+
   function NavigationTabs() {
     return (
       <>
         <Tabs
+          style={{marginBottom: '10px'}}
           activeKey={selectedNav}
           onSelect={(k) => setSelectedNav(k)}
         >
           <Tab active={selectedNav === NAV_TABS.LYRICS ? true : false} eventKey={NAV_TABS.LYRICS} title="Lyrics">
             {!loading && selectedLyrics && selectedNav === NAV_TABS.LYRICS && <DisplayLyrics />}
+            {!loading && !hasGuitarTabs && <h3>Lyrics for this track are not available</h3>}
           </Tab>
           <Tab active={selectedNav === NAV_TABS.SIX_STRING ? true : false} eventKey={NAV_TABS.SIX_STRING} title="6-String">
-            {!loading && !isGuitarTabSelected && <TabTable />}
+            {!loading && !isGuitarTabSelected && hasGuitarTabs && <TabTable />}
             {!loading && isGuitarTabSelected && selectedGuitarTab && <TabDisplay />}
+            {!loading && !hasGuitarTabs && <h3>Guitar tabs this track are not available</h3>}
           </Tab>
           <Tab active={selectedNav === NAV_TABS.BASS ? true : false} eventKey={NAV_TABS.BASS} title="Bass">
-            {!loading && !isBassTabSelected && <TabTable />}
+            {!loading && !isBassTabSelected && hasBassTabs && <TabTable />}
             {!loading && isBassTabSelected && selectedBassTab && <TabDisplay />}
+            {!loading && !hasBassTabs && <h3>Bass tabs for this track are not available</h3>}
           </Tab>
         </Tabs>
       </>
@@ -151,11 +174,9 @@ export function BandView({track}) {
   }
 
   function buildBassTableRows() {
-    var foundTabs = false;
     const rows = [];
     for (let x = 0; x < tabs.length; x++) {
       if (tabs[x].type === 'bass') {
-        foundTabs = true;
         rows.push(
           <tr key={'bass-' + x}>
             <td className="align-left" key={'bass-songName-' + x}><a className="clickable" style={{fontColor: 'blue',textDecoration: 'none'}} onClick={() => getTabByUrl(tabs[x].href)}>{tabs[x].songName}</a></td>
@@ -164,35 +185,12 @@ export function BandView({track}) {
           </tr>
         )
       }
-
-      if(foundTabs = false)
-      {
-        rows.push(
-          <tr>
-            <td className="align-left">NO TABS FOUND!</td>
-            <td className="align-left"></td>
-            <td className="align-left"></td>
-          </tr>
-        )
-      }
     }
 
+    // setHasBassTabs(rows.length > 0 ? true : false);
     return rows;
   }
 
-  function buildEmptyBassTableRows()
-  {
-    const rows = [];
-    rows.push(
-      <tr>
-        <td className="align-left">NO TABS FOUND!</td>
-        <td className="align-left"></td>
-        <td className="align-left"></td>
-      </tr>
-    )
-    return rows;
-  }
-  
   function buildGuitarTableRows() {
     const rows = [];
     for (let x = 0; x < tabs.length; x++) {
@@ -205,9 +203,9 @@ export function BandView({track}) {
           </tr>
         )
       }
-
     }
 
+    // setHasGuitarTabs(rows.length > 0 ? true : false);
     return rows;
   }
 }

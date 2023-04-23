@@ -31,3 +31,14 @@
   }
 }
 
+.music-player-row {
+  width: 100%;
+  bottom: 0;
+  position: absolute;
+
+  .music-player-col {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+}
+

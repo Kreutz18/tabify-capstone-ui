@@ -60,7 +60,7 @@ export function Home() {
          <li>Playlists: Once you've logged in, you can view your playlists by clicking on the 'Playlists' view. This should display a list of your playlists </li>
          <li>Song Information: Clicking on a playlist will take you to a screen where you can view the songs in that playlist. Each song should display the album art, song title, artist, and other details such as the album name and release date once clicking on the "Details" button. </li>
          <li>Guitar Relevant Details: If you're a guitar player, you can also see guitar relevant details such as the lyrics, 6 String Chords, and Bass Chords. To view these details, click on the “Show Tabs” button on the song on your playlist that you're interested in </li>
-         <li>Play Song: To play a song, simply click on the song title in the playlist. This should start playing the song in the app! </li>
+         <li>Play Song: To play a song, simply double click on the song title in the playlist. This should start playing the song in the app! </li>
          <li></li>
          <li>That's it! With these simple steps, you should be able to login, view your playlists, access song information, and see guitar relevant details. Have fun exploring your music!</li>
         </ul>

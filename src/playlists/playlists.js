@@ -184,8 +184,8 @@ export function Playlists() {
             </Col>
           }
         </Row>
-        <Row>
-          <Col>
+        <Row className='music-player-row'>
+          <Col xs={12} className='music-player-col'>
             <MusicPlayer id="musicPlayer"/>
           </Col>
         </Row>
