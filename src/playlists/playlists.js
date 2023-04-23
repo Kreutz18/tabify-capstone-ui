@@ -10,7 +10,6 @@ import { DeletePlaylist } from './delete-playlist-modal';
 import { Paging } from '../paging';
 import { BandView } from '../band-view/band-view';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { MusicPlayer } from '../music-player/musicplayer';
 
 const VIEWS = {
   PLAYLIST: 'PLAYLIST',

@@ -86,7 +86,7 @@ export function BandView({track}) {
             {!loading && !hasLyrics && <h3>Lyrics for this track are not available</h3>}
           </Tab>
           <Tab active={selectedNav === NAV_TABS.SIX_STRING ? true : false} 
-            style={{marginBottom: '100px'}} eventKey={NAV_TABS.SIX_STRING} title="6-String">
+            style={{marginBottom: '100px'}} eventKey={NAV_TABS.SIX_STRING} title="Guitar">
             {loading && <div style={{marginTop: '20px'}}><LoadingSpinner /></div>}
             {!loading && !isGuitarTabSelected && hasGuitarTabs && <TabTable />}
             {!loading && isGuitarTabSelected && selectedGuitarTab && <TabDisplay />}
